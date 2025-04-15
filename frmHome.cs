@@ -15,6 +15,7 @@ namespace StockControlSystem
         public frmHome()
         {
             InitializeComponent();
+            //test
         }
     }
 }
