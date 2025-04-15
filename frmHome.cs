@@ -16,6 +16,7 @@ namespace StockControlSystem
         {
             InitializeComponent();
             //test
+            //branch test
         }
     }
 }
