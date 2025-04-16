@@ -50,8 +50,6 @@ namespace StockControlSystem
             {
                 this.Hide();
 
-
-
                 //メインメニュー画面遷移
                 frmMainMenu frmMainMenu = new frmMainMenu(txtStaffICD.Text);
                 frmMainMenu.ShowDialog();
@@ -59,7 +57,7 @@ namespace StockControlSystem
             }
             else
             {
-                MessageBox.Show("ログインできません。");
+                MessageBox.Show("社員CDまたは、パスワードが間違っています。");
             }
         }
 
@@ -85,9 +83,9 @@ namespace StockControlSystem
                 MessageBox.Show("パスワードを入力をしてください。");
                 return false;
             }
-            if(txtPass.Text.Length != 4 || !int.TryParse(txtPass.Text, out int x))
+            if(txtPass.Text.Length != 8 || !int.TryParse(txtPass.Text, out int x))
             {
-                MessageBox.Show("パスワードは4文字の数字で入力してください。");
+                MessageBox.Show("パスワードは8文字の数字で入力してください。");
                 return false;
             }
 

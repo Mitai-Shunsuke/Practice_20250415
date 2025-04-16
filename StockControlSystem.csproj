@@ -58,6 +58,12 @@
     <Compile Include="frmMainMenu.Designer.cs">
       <DependentUpon>frmMainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmStockControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStockControl.Designer.cs">
+      <DependentUpon>frmStockControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="pgSelectSQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +72,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMainMenu.resx">
       <DependentUpon>frmMainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStockControl.resx">
+      <DependentUpon>frmStockControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

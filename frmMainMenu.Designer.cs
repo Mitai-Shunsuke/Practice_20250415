@@ -44,6 +44,7 @@
             this.btnStockControl.TabIndex = 0;
             this.btnStockControl.Text = "現在庫管理";
             this.btnStockControl.UseVisualStyleBackColor = false;
+            this.btnStockControl.Click += new System.EventHandler(this.btnStockControl_Click);
             // 
             // btnIOControl
             // 
@@ -55,6 +56,7 @@
             this.btnIOControl.TabIndex = 1;
             this.btnIOControl.Text = "入出庫管理";
             this.btnIOControl.UseVisualStyleBackColor = false;
+            this.btnIOControl.Click += new System.EventHandler(this.btnIOControl_Click);
             // 
             // btnHistory
             // 
@@ -66,6 +68,7 @@
             this.btnHistory.TabIndex = 2;
             this.btnHistory.Text = "入出庫履歴";
             this.btnHistory.UseVisualStyleBackColor = false;
+            this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
             // 
             // btnClose
             // 
