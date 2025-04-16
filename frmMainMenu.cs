@@ -10,12 +10,11 @@ using System.Windows.Forms;
 
 namespace StockControlSystem
 {
-    public partial class frmHome : Form
+    public partial class frmMainMenu : Form
     {
-        public frmHome()
+        public frmMainMenu()
         {
             InitializeComponent();
-            //test
         }
     }
 }
