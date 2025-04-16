@@ -12,7 +12,7 @@ namespace StockControlSystem
     internal class pgSelectSQL
     {
         //SELECT文の実行
-        public bool SelectSQL(string Query, List<SqlParameter> Parameters)
+        public DataTable SelectSQL(string Query, List<SqlParameter> Parameters)
         {
             string connectionDB = @"Server=(localdb)\MSSQLLocalDB;Database=TEST_DB;Integrated Security=True";
             DataTable dt = new DataTable();
@@ -37,16 +37,6 @@ namespace StockControlSystem
                             //データをDataTableに読み込み
                             dt.Load(reader);
 
-                            //ログイン可否
-                            if(dt.Rows.Count > 0)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                MessageBox.Show("ログインできません。");
-                                return false;
-                            }
                         }
                     }
                 }
@@ -55,7 +45,7 @@ namespace StockControlSystem
             {
                 MessageBox.Show($"データ取得中にエラーが生じました:{ ex.Message}");
             }
-            return false;
+            return dt;
         }
     }
 }

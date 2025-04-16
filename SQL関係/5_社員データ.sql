@@ -1,8 +1,8 @@
 INSERT INTO IM_STAFF("Password",StaffName)
-VALUES('1111',N'テスト')
+VALUES('12345678',N'テスト')
 
 INSERT INTO IM_STAFF("Password",StaffName)
-VALUES('2222',N'三田井')
+VALUES('11112222',N'三田井')
 
 INSERT INTO IM_STAFF("Password",StaffName)
-VALUES('3333',N'谷')
+VALUES('33334444',N'谷')

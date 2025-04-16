@@ -12,9 +12,24 @@ namespace StockControlSystem
 {
     public partial class frmMainMenu : Form
     {
-        public frmMainMenu()
+        #region■プロパティ
+        //社員CD
+        private int StaffCD;
+
+        #endregion
+        public frmMainMenu(string StaffCd)
         {
             InitializeComponent();
+
+            if(int.TryParse(StaffCd,out int i))
+            StaffCD = i;
+
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

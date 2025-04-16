@@ -31,9 +31,10 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
+            this.txtStaffICD = new System.Windows.Forms.TextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblStaffName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -56,7 +57,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(107, 24);
             this.label2.TabIndex = 2;
-            this.label2.Text = "社員ID";
+            this.label2.Text = "社員CD";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
@@ -70,24 +71,23 @@
             this.label3.Text = "パスワード";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // txtName
+            // txtStaffICD
             // 
-            this.txtName.Font = new System.Drawing.Font("ＭＳ Ｐ明朝", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtName.Location = new System.Drawing.Point(205, 121);
-            this.txtName.Multiline = true;
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(234, 48);
-            this.txtName.TabIndex = 4;
-            this.txtName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtStaffICD.Font = new System.Drawing.Font("ＭＳ Ｐ明朝", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.txtStaffICD.Location = new System.Drawing.Point(205, 121);
+            this.txtStaffICD.Name = "txtStaffICD";
+            this.txtStaffICD.Size = new System.Drawing.Size(234, 34);
+            this.txtStaffICD.TabIndex = 4;
+            this.txtStaffICD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtStaffICD.Validated += new System.EventHandler(this.txtStaffICD_Validated);
             // 
             // txtPass
             // 
             this.txtPass.Font = new System.Drawing.Font("ＭＳ Ｐ明朝", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtPass.Location = new System.Drawing.Point(205, 203);
-            this.txtPass.Multiline = true;
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '●';
-            this.txtPass.Size = new System.Drawing.Size(468, 48);
+            this.txtPass.Size = new System.Drawing.Size(468, 34);
             this.txtPass.TabIndex = 5;
             this.txtPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -102,15 +102,25 @@
             this.label1.Text = "社員名";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // lblStaffName
+            // 
+            this.lblStaffName.Font = new System.Drawing.Font("ＭＳ Ｐ明朝", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblStaffName.Location = new System.Drawing.Point(459, 124);
+            this.lblStaffName.Name = "lblStaffName";
+            this.lblStaffName.Size = new System.Drawing.Size(214, 45);
+            this.lblStaffName.TabIndex = 7;
+            this.lblStaffName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGoldenrodYellow;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblStaffName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPass);
-            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.txtStaffICD);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnLogin);
@@ -126,9 +136,10 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.TextBox txtStaffICD;
         private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblStaffName;
     }
 }
 

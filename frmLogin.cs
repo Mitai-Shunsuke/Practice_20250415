@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,9 @@ namespace StockControlSystem
         //■プロパティ
         //コンストラクタ
         pgSelectSQL bat = new pgSelectSQL();
+
+        //メインフォーム用
+        public static ApplicationContext MainForm;
 
         public frmLogin()
         {
@@ -36,25 +40,41 @@ namespace StockControlSystem
 
             //パラメータ追加
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@Name",txtName.Text));
+            parameters.Add(new SqlParameter("@CD",txtStaffICD.Text));
             parameters.Add(new SqlParameter("@Pass",txtPass.Text));
 
+            DataTable dt = new DataTable();
+            dt = bat.SelectSQL(Query, parameters);
             //実行
-            if(bat.SelectSQL(Query, parameters))
+            if (dt.Rows.Count > 0)
             {
+                this.Hide();
+
+
+
                 //メインメニュー画面遷移
-                frmMainMenu frmMainMenu = new frmMainMenu();
+                frmMainMenu frmMainMenu = new frmMainMenu(txtStaffICD.Text);
                 frmMainMenu.ShowDialog();
+                this.Close();                
+            }
+            else
+            {
+                MessageBox.Show("ログインできません。");
             }
         }
 
         //■入力チェック
         private bool CheckInput()
         {
-            //社員名
-            if(txtName.Text == "")
+            //社員CD
+            if(txtStaffICD.Text == "")
             {
-                MessageBox.Show("社員名を入力をしてください。");
+                MessageBox.Show("社員CDを入力をしてください。");
+                return false;
+            }
+            if(txtStaffICD.Text.Length != 4 || !int.TryParse(txtStaffICD.Text, out int i))
+            {
+                MessageBox.Show("社員CDは4文字の数字で入力してください。");
                 return false;
             }
 
@@ -65,7 +85,7 @@ namespace StockControlSystem
                 MessageBox.Show("パスワードを入力をしてください。");
                 return false;
             }
-            if(txtPass.Text.Length != 4 || !int.TryParse(txtPass.Text, out int i))
+            if(txtPass.Text.Length != 4 || !int.TryParse(txtPass.Text, out int x))
             {
                 MessageBox.Show("パスワードは4文字の数字で入力してください。");
                 return false;
@@ -74,18 +94,59 @@ namespace StockControlSystem
             return true;
         }
 
-        //■SQL作成
+        #region■SQL作成
+        //ログイン用
         private string CreateSQL_Staff()
         {
             //SQL作成
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("SELECT *");
             sb.AppendLine("FROM IM_STAFF");
-            sb.AppendLine("WHERE StaffName LIKE @Name");
+            sb.AppendLine("WHERE StaffCD LIKE @CD");
             sb.AppendLine("AND Password LIKE @Pass");
 
             return sb.ToString();
 
+        }
+
+        //社員名表示用
+        private string CreateSQL_Staff2()
+        {
+            //SQL作成
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("SELECT StaffName");
+            sb.AppendLine("FROM IM_STAFF");
+            sb.AppendLine("WHERE StaffCD LIKE @StaffCD");
+
+            return sb.ToString();
+        }
+        #endregion
+
+        private void txtStaffICD_Validated(object sender, EventArgs e)
+        {
+            if (txtStaffICD.Text == "")
+            {
+                return;
+            }
+
+            //SQL作成
+            string Query = CreateSQL_Staff2();
+
+            //パラメータ追加
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@StaffCD", txtStaffICD.Text));
+
+            //実行
+            DataTable dt = new DataTable();
+            dt = bat.SelectSQL(Query, parameters);
+            if (dt.Rows.Count > 0)
+            {
+                lblStaffName.Text = dt.Rows[0]["StaffName"].ToString();
+            }
+            else
+            {
+                lblStaffName.Text = "";
+            }
         }
     }
 }
