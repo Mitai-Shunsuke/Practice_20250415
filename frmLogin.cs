@@ -14,19 +14,23 @@ namespace StockControlSystem
 {
     public partial class frmLogin : Form
     {
-        //■プロパティ
+        #region■プロパティ
         //コンストラクタ
         pgSelectSQL bat = new pgSelectSQL();
 
         //メインフォーム用
         public static ApplicationContext MainForm;
 
+        #endregion
+
+        #region■ロード
         public frmLogin()
         {
             InitializeComponent();
         }
+        #endregion
 
-        //■ログインボタン
+        #region■ログインボタン
         private void btnLogin_Click(object sender, EventArgs e)
         {
             //入力チェック
@@ -52,16 +56,51 @@ namespace StockControlSystem
 
                 //メインメニュー画面遷移
                 frmMainMenu frmMainMenu = new frmMainMenu(txtStaffICD.Text);
+
+                //★モードレス表示
                 frmMainMenu.ShowDialog();
-                this.Close();                
+                //frmMainMenu.Show();
+                //this.Close();                
             }
             else
             {
                 MessageBox.Show("社員CDまたは、パスワードが間違っています。");
             }
         }
+        #endregion
 
-        //■入力チェック
+        #region■イベント
+        //社員名の表示
+        private void txtStaffICD_Validated(object sender, EventArgs e)
+        {
+            if (txtStaffICD.Text == "")
+            {
+                return;
+            }
+
+            //SQL作成
+            string Query = CreateSQL_Staff2();
+
+            //パラメータ追加
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@StaffCD", txtStaffICD.Text));
+
+            //実行
+            DataTable dt = new DataTable();
+            dt = bat.SelectSQL(Query, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                lblStaffName.Text = dt.Rows[0]["StaffName"].ToString();
+            }
+            else
+            {
+                lblStaffName.Text = "";
+            }
+        }
+        #endregion
+
+        #region■入力チェック
         private bool CheckInput()
         {
             //社員CD
@@ -91,6 +130,7 @@ namespace StockControlSystem
 
             return true;
         }
+        #endregion
 
         #region■SQL作成
         //ログイン用
@@ -118,33 +158,6 @@ namespace StockControlSystem
 
             return sb.ToString();
         }
-        #endregion
-
-        private void txtStaffICD_Validated(object sender, EventArgs e)
-        {
-            if (txtStaffICD.Text == "")
-            {
-                return;
-            }
-
-            //SQL作成
-            string Query = CreateSQL_Staff2();
-
-            //パラメータ追加
-            List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@StaffCD", txtStaffICD.Text));
-
-            //実行
-            DataTable dt = new DataTable();
-            dt = bat.SelectSQL(Query, parameters);
-            if (dt.Rows.Count > 0)
-            {
-                lblStaffName.Text = dt.Rows[0]["StaffName"].ToString();
-            }
-            else
-            {
-                lblStaffName.Text = "";
-            }
-        }
+        #endregion        
     }
 }
