@@ -1,6 +1,0 @@
---■商品マスタ
-CREATE TABLE IM_ITEM(
-ItemClassID INT REFERENCES IM_ITEM_CLASS(ItemClassID),--商品分類ID(外部参照)
-ItemID INT PRIMARY KEY,--商品ID
-ItemName NVARCHAR(50) --商品名
-)
