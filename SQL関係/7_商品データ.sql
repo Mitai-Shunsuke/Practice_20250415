@@ -1,32 +1,38 @@
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(1,1,'ボールペン　赤')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(1,N'ボールペン　赤')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(1,2,'ボールペン　青')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(1,N'ボールペン　青')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(1,3,'ボールペン　緑')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(1,N'ボールペン　緑')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(2,4,'A3用紙')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(2,N'A3用紙')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(2,5,'A4用紙')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(2,N'A4用紙')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(2,6,'B3用紙')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(2,N'B3用紙')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(2,7,'A4用紙')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(2,N'A4用紙')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(3,8,'マーカー　赤')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(3,N'マーカー　赤')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(3,9,'マーカー　青')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(3,N'マーカー　青')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(3,10,'マーカー　緑')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(3,N'マーカー　緑')
 
-INSERT INTO IM_ITEM(ItemClassCD,ItemCD,ItemName)
-VALUES(3,11,'マーカー　黄')
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(3,N'マーカー　黄')
+
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(4,N'筆箱　赤')
+
+INSERT INTO IM_ITEM(ItemClassCD,ItemName)
+VALUES(5,N'シャープペンシル ')
