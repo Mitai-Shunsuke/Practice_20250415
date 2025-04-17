@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -256,21 +257,8 @@ namespace StockControlSystem
         #endregion
 
         #region■パラメータ追加
-        //private List<SqlParameter> AddParamereter(int i)
+        //private List<SqlParameter> AddParamereter()
         //{
-        //    List<SqlParameter> rowParam = new List<SqlParameter>();
-
-        //    //日付
-        //    DateTime IODate = DateTime.Parse(dataGridView1.Rows[i].);
-        //    //区分（入庫 = 0　 出庫 = 1）
-
-        //    rowParam.Add(new SqlParameter("ItemCD", dataGridView1.Rows[i].Columns[1]));
-        //    rowParam.Add(new SqlParameter("IODate", IODate));
-        //    rowParam.Add(new SqlParameter("IOflg", dataGridView1.Rows[i].Columns[4]));
-        //    rowParam.Add(new SqlParameter("Moving", dataGridView1.Rows[i].Columns[3]));
-        //    rowParam.Add(new SqlParameter("StaffCD", StaffCd));
-
-        //    return rowParam;
 
         //}
         #endregion
