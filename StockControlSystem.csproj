@@ -64,6 +64,7 @@
     <Compile Include="frmStockControl.Designer.cs">
       <DependentUpon>frmStockControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="pgExecuteSQL.cs" />
     <Compile Include="pgSelectSQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
