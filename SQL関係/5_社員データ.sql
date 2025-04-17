@@ -1,3 +1,5 @@
+DELETE FROM IM_STAFF
+
 INSERT INTO IM_STAFF("Password",StaffName)
 VALUES('12345678',N'ƒeƒXƒg')
 

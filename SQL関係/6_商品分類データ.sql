@@ -1,3 +1,5 @@
+DELETE FROM IM_ITEM_CLASS
+
 INSERT INTO IM_ITEM_CLASS(ItemClassCD,ItemClassName,Stocks)
 VALUES(1,N'É{Å[ÉãÉyÉì',10)
 
