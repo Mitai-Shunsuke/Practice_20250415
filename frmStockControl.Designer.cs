@@ -48,13 +48,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.ItemClassName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemCD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IOflg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Moving = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -71,7 +70,6 @@
             this.ItemCD,
             this.ItemName,
             this.Date,
-            this.IOflg,
             this.Moving});
             this.dataGridView1.Location = new System.Drawing.Point(47, 198);
             this.dataGridView1.MultiSelect = false;
@@ -80,6 +78,7 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(983, 291);
             this.dataGridView1.TabIndex = 12;
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             // 
@@ -288,48 +287,6 @@
             this.label5.Text = "分類CD";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ItemClassName
-            // 
-            this.ItemClassName.HeaderText = "商品分類";
-            this.ItemClassName.MinimumWidth = 6;
-            this.ItemClassName.Name = "ItemClassName";
-            this.ItemClassName.Width = 75;
-            // 
-            // ItemCD
-            // 
-            this.ItemCD.HeaderText = "商品CD";
-            this.ItemCD.MinimumWidth = 6;
-            this.ItemCD.Name = "ItemCD";
-            this.ItemCD.Width = 80;
-            // 
-            // ItemName
-            // 
-            this.ItemName.HeaderText = "商品名";
-            this.ItemName.MinimumWidth = 6;
-            this.ItemName.Name = "ItemName";
-            this.ItemName.Width = 75;
-            // 
-            // Date
-            // 
-            this.Date.HeaderText = "入出庫日";
-            this.Date.MinimumWidth = 6;
-            this.Date.Name = "Date";
-            this.Date.Width = 75;
-            // 
-            // IOflg
-            // 
-            this.IOflg.HeaderText = "区分";
-            this.IOflg.MinimumWidth = 6;
-            this.IOflg.Name = "IOflg";
-            this.IOflg.Width = 62;
-            // 
-            // Moving
-            // 
-            this.Moving.HeaderText = "移動数";
-            this.Moving.MinimumWidth = 6;
-            this.Moving.Name = "Moving";
-            this.Moving.Width = 75;
-            // 
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.DodgerBlue;
@@ -340,6 +297,41 @@
             this.btnDelete.Text = "1行削除";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // ItemClassName
+            // 
+            this.ItemClassName.HeaderText = "商品分類";
+            this.ItemClassName.MinimumWidth = 6;
+            this.ItemClassName.Name = "ItemClassName";
+            this.ItemClassName.Width = 96;
+            // 
+            // ItemCD
+            // 
+            this.ItemCD.HeaderText = "商品CD";
+            this.ItemCD.MinimumWidth = 6;
+            this.ItemCD.Name = "ItemCD";
+            this.ItemCD.Width = 86;
+            // 
+            // ItemName
+            // 
+            this.ItemName.HeaderText = "商品名";
+            this.ItemName.MinimumWidth = 6;
+            this.ItemName.Name = "ItemName";
+            this.ItemName.Width = 81;
+            // 
+            // Date
+            // 
+            this.Date.HeaderText = "入出庫日";
+            this.Date.MinimumWidth = 6;
+            this.Date.Name = "Date";
+            this.Date.Width = 96;
+            // 
+            // Moving
+            // 
+            this.Moving.HeaderText = "移動数";
+            this.Moving.MinimumWidth = 6;
+            this.Moving.Name = "Moving";
+            this.Moving.Width = 81;
             // 
             // frmStockControl
             // 
@@ -390,12 +382,11 @@
         private System.Windows.Forms.TextBox txtItemName;
         private System.Windows.Forms.TextBox txtItemCD;
         private System.Windows.Forms.TextBox txtClassCD2;
+        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemClassName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemCD;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IOflg;
         private System.Windows.Forms.DataGridViewTextBoxColumn Moving;
-        private System.Windows.Forms.Button btnDelete;
     }
 }

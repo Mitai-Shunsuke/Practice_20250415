@@ -28,7 +28,8 @@ namespace StockControlSystem
         //選択中のセル行
         private int cellRow;
 
-        //選択中の行
+        //ロード処理フラグ
+        private bool IsLoading = true;
 
         #endregion
 
@@ -37,9 +38,11 @@ namespace StockControlSystem
             InitializeComponent();
 
             StaffCd = StaffCD;
-            
+
             //dataGridViewの入力形式
-            //comboBox;
+            SettingComboBox();
+            
+            IsLoading = false;
         }
 
         #region■イベント
@@ -133,6 +136,24 @@ namespace StockControlSystem
             //    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCyan;
             //}
 
+        }
+
+        //DataGridViewのダブルクリック
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //セル取得
+            int cellColumn = e.ColumnIndex;
+
+            //「入出庫日」列かどうか
+            if (cellColumn == 3)
+            {
+                frmDateTimePicker frmDateTimePicker = new frmDateTimePicker();
+                frmDateTimePicker.ShowDialog();
+
+                string Date = frmDateTimePicker.Date.ToString("yyyy/MM/dd");
+                dataGridView1.CurrentCell.Value = Date;
+            }
         }
         #endregion
 
@@ -242,9 +263,9 @@ namespace StockControlSystem
                 bat1.ExecuteSQL(query, parameters);
             }
 
-            MessageBox.Show("データ登録が完了しました。");
-
             dataGridView1.Rows.Clear();
+
+            MessageBox.Show("データ登録が完了しました。");
         }
 
         //一行削除ボタン
@@ -373,7 +394,8 @@ namespace StockControlSystem
 
         #endregion
 
-        #region■DataGridViewの行番号表示
+        #region■DataGridViewの表示設定
+        //行番号表示
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             // 行番号を描画するための設定
@@ -389,6 +411,22 @@ namespace StockControlSystem
                 );
             }
         }
+
+        //区別の表示
+        private void SettingComboBox()
+        {
+            //ComboBoxを作成
+            DataGridViewComboBoxColumn cmbColumn = new DataGridViewComboBoxColumn();
+            cmbColumn.HeaderText = "区別";
+            cmbColumn.Name = "区別";
+            cmbColumn.Items.Add("入庫");
+            cmbColumn.Items.Add("出庫");
+
+            //列の挿入インデックス
+            dataGridView1.Columns.Insert(4, cmbColumn);
+        }
+
+
         #endregion
     }
 }
