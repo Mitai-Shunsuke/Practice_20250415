@@ -25,6 +25,11 @@ namespace StockControlSystem
         //社員CD
         private int StaffCd;
 
+        //選択中のセル行
+        private int cellRow;
+
+        //選択中の行
+
         #endregion
 
         public frmStockControl(int StaffCD)
@@ -67,7 +72,6 @@ namespace StockControlSystem
             {
                 MessageBox.Show($"分類CD：「{txtClassCD.Text}」は、存在しません。");
             }
-
         }
 
         //商品CD
@@ -100,6 +104,34 @@ namespace StockControlSystem
             {
                 MessageBox.Show($"分類CD：「{txtItemCD.Text}」は、存在しません。");
             }
+
+        }
+
+        //DataGridViewのセル選択変更
+        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            //背景色をすべて白色にする
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.DefaultCellStyle.BackColor = Color.White;
+            }
+
+            cellRow = e.RowIndex;
+
+            //行背景色を変える
+            dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCyan;
+
+            //
+            //if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.LightCyan)
+            //{
+            //    //水色→白色
+            //    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+            //}
+            //else
+            //{
+            //    //白色→水色
+            //    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCyan;
+            //}
 
         }
         #endregion
@@ -214,6 +246,20 @@ namespace StockControlSystem
 
             dataGridView1.Rows.Clear();
         }
+
+        //一行削除ボタン
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            //注意メッセージ
+            DialogResult result = MessageBox.Show("削除しますか？","注意",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning);
+            if(result == DialogResult.OK)
+            {
+                //選択行を取得
+                int selctionRow = cellRow;
+
+                dataGridView1.Rows.RemoveAt(cellRow);
+            }
+        }
         #endregion
 
         #region■SQL作成
@@ -322,10 +368,7 @@ namespace StockControlSystem
 
                 //Add
                 dataGridView1.Rows.Add(className, itemCD, itemName);
-
             }
-
-
         }
 
         #endregion
@@ -347,7 +390,5 @@ namespace StockControlSystem
             }
         }
         #endregion
-
-        
     }
 }

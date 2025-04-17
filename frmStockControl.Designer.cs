@@ -79,7 +79,8 @@
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(983, 291);
-            this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.TabIndex = 12;
+            this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             // 
             // label1
@@ -148,7 +149,7 @@
             this.btnInsert.Location = new System.Drawing.Point(1072, 418);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(110, 71);
-            this.btnInsert.TabIndex = 10;
+            this.btnInsert.TabIndex = 11;
             this.btnInsert.Text = "登録";
             this.btnInsert.UseVisualStyleBackColor = false;
             this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
@@ -335,9 +336,10 @@
             this.btnDelete.Location = new System.Drawing.Point(1072, 320);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(110, 71);
-            this.btnDelete.TabIndex = 12;
+            this.btnDelete.TabIndex = 10;
             this.btnDelete.Text = "1行削除";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // frmStockControl
             // 
