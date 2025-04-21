@@ -309,7 +309,7 @@ namespace StockControlSystem
                 
                 AddParam(parameter, GetSqlParameterStaffCD());//StaffCD
                 
-                //6項目すべて有効なときだけ追加
+                //６項目すべて有効なときだけ追加
                 if (parameter.Count < 6)
                 {
                     return null;
