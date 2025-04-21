@@ -68,6 +68,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(272, 153);
+            this.ControlBox = false;
             this.Controls.Add(this.btnEnter);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.dateTimePicker1);

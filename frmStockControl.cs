@@ -288,10 +288,9 @@ namespace StockControlSystem
         #endregion
 
         #region■パラメータ追加
-
         private List<List<SqlParameter>> AddParameters()
         {
-            List<List<SqlParameter>> allParams = new List<List<SqlParameter>>();            
+            List<List<SqlParameter>> allParams = new List<List<SqlParameter>>();
 
             //各行のparameter
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -299,13 +298,17 @@ namespace StockControlSystem
                 List<SqlParameter> parameter = new List<SqlParameter>();
 
                 //パラメータ追加
-                AddParam(parameter, GetSqlParameterInt(row, 1, "商品CD","ItemCD"));//[1]商品CD = ItemCD
-                AddParam(parameter, GetSqlParameterDatetime(row, 3, "日付"));//[3]日付 = IODate
-                AddParam(parameter, GetSqlParameterKbn(row, 4, "区分"));//[4]区分 = IsRecieved
-                AddParam(parameter, GetSqlParameterInt(row, 5, "移動数", "Moving"));//[5]入出庫数 = Moving
-                AddParam(parameter, GetSqlParameterRemarks(row, 6, "備考"));//[6]備考 = Remarks
+                if(!AddParam(parameter, GetSqlParameterInt(row, 1, "商品CD", "ItemCD")) ||
+                    !AddParam(parameter, GetSqlParameterDatetime(row, 3, "日付")) ||
+                    !AddParam(parameter, GetSqlParameterKbn(row, 4, "区分")) ||
+                    !AddParam(parameter, GetSqlParameterInt(row, 5, "移動数", "Moving")) ||
+                    !AddParam(parameter, GetSqlParameterRemarks(row, 6, "備考")))
+                {
+                    return null;
+                }
+                
                 AddParam(parameter, GetSqlParameterStaffCD());//StaffCD
-
+                
                 //6項目すべて有効なときだけ追加
                 if (parameter.Count < 6)
                 {
@@ -394,12 +397,15 @@ namespace StockControlSystem
         }
 
         //パラメータ追加
-        private void AddParam(List<SqlParameter> parameter, SqlParameter p)
+        private bool AddParam(List<SqlParameter> parameter, SqlParameter p)
         {
-            if (p != null)
-            {
-                parameter.Add(p);
+            if (p == null)
+            {                
+                return false;
             }
+
+            parameter.Add(p);
+            return true;
         }
         #endregion
 
