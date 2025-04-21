@@ -5,7 +5,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,9 +30,6 @@ namespace StockControlSystem
         //選択中のセル行
         private int cellRow;
 
-        //ロード処理フラグ
-        private bool IsLoading = true;
-
         #endregion
 
         public frmStockControl(int StaffCD)
@@ -41,8 +40,6 @@ namespace StockControlSystem
 
             //dataGridViewの入力形式
             SettingComboBox();
-            
-            IsLoading = false;
         }
 
         #region■イベント
@@ -123,36 +120,37 @@ namespace StockControlSystem
 
             //行背景色を変える
             dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCyan;
-
-            //
-            //if (dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == Color.LightCyan)
-            //{
-            //    //水色→白色
-            //    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
-            //}
-            //else
-            //{
-            //    //白色→水色
-            //    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCyan;
-            //}
-
         }
 
         //DataGridViewのダブルクリック
 
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //セル取得
             int cellColumn = e.ColumnIndex;
 
-            //「入出庫日」列かどうか
+            //セル値取得
             if (cellColumn == 3)
             {
-                frmDateTimePicker frmDateTimePicker = new frmDateTimePicker();
-                frmDateTimePicker.ShowDialog();
+                if (DateTime.TryParse(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString(), out DateTime selectedDate))
+                {
+                    //選択日付あり
+                    frmDateTimePicker frmDateTimePicker = new frmDateTimePicker(selectedDate);
+                    frmDateTimePicker.ShowDialog();
 
-                string Date = frmDateTimePicker.Date.ToString("yyyy/MM/dd");
-                dataGridView1.CurrentCell.Value = Date;
+                    string Date = frmDateTimePicker.Date.ToString("yyyy/MM/dd");
+                    dataGridView1.CurrentCell.Value = Date;
+                }
+                else
+                {
+                    //選択日付なし
+                    DateTime nowTime = DateTime.Now;
+                    frmDateTimePicker frmDateTimePicker = new frmDateTimePicker(nowTime);
+                    frmDateTimePicker.ShowDialog();
+
+                    string Date = frmDateTimePicker.Date.ToString("yyyy/MM/dd");
+                    dataGridView1.CurrentCell.Value = Date;
+                }
             }
         }
         #endregion
@@ -220,48 +218,15 @@ namespace StockControlSystem
             string query = CreateSQL_INSERT();
 
             //パラメータ取得
-            //List<SqlParameter> parameters = AddParameter();
-            //データ分繰り返し→★別メソッド
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            List<List<SqlParameter>> allParam = new List<List<SqlParameter>>();
+            allParam = AddParameters();
+            if(allParam == null )
             {
-                List<SqlParameter> parameters = new List<SqlParameter>();
-
-                //商品CD
-                if (int.TryParse(row.Cells[1].Value?.ToString(), out int itemCD))
-                {
-                    parameters.Add(new SqlParameter("@ItemCD", itemCD));
-                }
-
-                //日付
-                if (DateTime.TryParse(row.Cells[3].Value?.ToString(), out DateTime IODate))
-                {
-                    parameters.Add(new SqlParameter("@IODate", IODate));
-                }
-
-                //入出庫区分
-                if (row.Cells[4].Value.ToString() == "入庫")
-                {
-                    int IsReceived = 1;
-                    parameters.Add(new SqlParameter("@IsReceived", IsReceived));
-                }
-                else
-                {
-                    int IsReceived = 0;
-                    parameters.Add(new SqlParameter("@IsReceived", IsReceived));
-                }
-
-                //移動数
-                if (int.TryParse(row.Cells[5].Value?.ToString(), out int moving))
-                {
-                    parameters.Add(new SqlParameter("@Moving", moving));
-                }
-
-                //社員CD
-                parameters.Add(new SqlParameter("@StaffCD", StaffCd));
-
-                //実行
-                bat1.ExecuteSQL(query, parameters);
+                return;
             }
+
+            //実行
+            bat1.ExecuteMultipleSQL(query, allParam);
 
             dataGridView1.Rows.Clear();
 
@@ -284,7 +249,7 @@ namespace StockControlSystem
         #endregion
 
         #region■SQL作成
-        //CD入力と追加
+        //CD入力と追加（IM_ITEMテーブル、IM_ITEM_CLASSテーブル）
         private string CreateSQL_Select(bool IsClass)
         {
             StringBuilder sb = new StringBuilder();
@@ -309,25 +274,133 @@ namespace StockControlSystem
             return sb.ToString();
         }
 
+        //登録ボタン（ID_IO_HISTORYテーブル）
         private string CreateSQL_INSERT()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("");
             sb.AppendLine("INSERT INTO ID_IO_HISTORY");
-            sb.AppendLine("(IODate,ItemCD,IsReceived,Moving,StaffCD)");
+            sb.AppendLine("(IODate,ItemCD,IsReceived,Moving,StaffCD,Remarks)");
             sb.AppendLine("VALUES");
-            sb.AppendLine("(@IODate,@ItemCD,@IsReceived,@Moving,@StaffCD)");
-
+            sb.AppendLine("(@IODate,@ItemCD,@IsReceived,@Moving,@StaffCD,@Remarks)");
 
             return sb.ToString();
         }
         #endregion
 
         #region■パラメータ追加
-        //private List<SqlParameter> AddParamereter()
-        //{
 
-        //}
+        private List<List<SqlParameter>> AddParameters()
+        {
+            List<List<SqlParameter>> allParams = new List<List<SqlParameter>>();            
+
+            //各行のparameter
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                List<SqlParameter> parameter = new List<SqlParameter>();
+
+                //パラメータ追加
+                AddParam(parameter, GetSqlParameterInt(row, 1, "商品CD","ItemCD"));//[1]商品CD = ItemCD
+                AddParam(parameter, GetSqlParameterDatetime(row, 3, "日付"));//[3]日付 = IODate
+                AddParam(parameter, GetSqlParameterKbn(row, 4, "区分"));//[4]区分 = IsRecieved
+                AddParam(parameter, GetSqlParameterInt(row, 5, "移動数", "Moving"));//[5]入出庫数 = Moving
+                AddParam(parameter, GetSqlParameterRemarks(row, 6, "備考"));//[6]備考 = Remarks
+                AddParam(parameter, GetSqlParameterStaffCD());//StaffCD
+
+                //6項目すべて有効なときだけ追加
+                if (parameter.Count < 6)
+                {
+                    return null;
+                }
+
+                allParams.Add(parameter);
+            }
+
+            //DataGridView全てのパラメータを追加
+            return allParams;
+        }
+        #endregion
+
+        #region■行単位でパラメータ追加
+
+        //Int型変換&パラメータ追加
+        private SqlParameter GetSqlParameterInt(DataGridViewRow row, int colIndex, string colName, string pName)
+        {
+            if (int.TryParse(row.Cells[colIndex].Value?.ToString(), out int oResult))
+            {
+                //値はoResultに入ってるのでそのまま終了でOK
+                return new SqlParameter("@" + pName, oResult);
+            }
+            else
+            {
+                MessageBox.Show(colName + "の値が不正です");
+                //★そのセルにフォーカスを移す
+                dataGridView1[colIndex, row.Index].Selected = true;
+                return null;
+            }
+        }
+
+        //DateTime型変換&パラメータ追加
+        private SqlParameter GetSqlParameterDatetime(DataGridViewRow row, int colIndex, string colName)
+        {
+            if (DateTime.TryParse(row.Cells[colIndex].Value?.ToString(), out DateTime oResult))
+            {
+                //値はoResultに入ってるのでそのまま終了でOK
+                return new SqlParameter("@IODate", oResult);
+            }
+            else
+            {
+                MessageBox.Show(colName + "の値が不正です");
+                //★そのセルにフォーカスを移す
+                dataGridView1[colIndex, row.Index].Selected = true;
+                return null;
+            }
+        }
+
+        //StaffCD用パラメータ追加
+        private SqlParameter GetSqlParameterStaffCD()
+        {
+            return new SqlParameter("@StaffCd", StaffCd);
+        }
+
+        //区分用パラメータ追加
+        private SqlParameter GetSqlParameterKbn(DataGridViewRow row, int colIndex, string colName)
+        {
+            if(row.Cells[colIndex].Value == null)
+            {
+                MessageBox.Show(colName + "を選択してください。");
+                //★そのセルにフォーカスを移す
+                dataGridView1[colIndex, row.Index].Selected = true;
+                return null;
+            }
+            else if (row.Cells[colIndex].Value.ToString() == "入庫")
+            {
+                return new SqlParameter("@IsReceived", "True");
+            }
+            else
+            {
+                return new SqlParameter("@IsReceived", "False");
+            }
+        }
+
+        //備考用パラメータ追加
+        private SqlParameter GetSqlParameterRemarks(DataGridViewRow row, int colIndex, string colName)
+        {
+            if(row.Cells[colIndex].Value == null)
+            {
+                return new SqlParameter("@Remarks", "");
+            }
+
+            return new SqlParameter("@Remarks", row.Cells[colIndex].Value.ToString());
+        }
+
+        //パラメータ追加
+        private void AddParam(List<SqlParameter> parameter, SqlParameter p)
+        {
+            if (p != null)
+            {
+                parameter.Add(p);
+            }
+        }
         #endregion
 
         #region■入力チェック
@@ -363,14 +436,15 @@ namespace StockControlSystem
             return true;
         }
 
+        //private bool checkDgv()
+        //{
+
+        //}
         #endregion
 
         #region■DataGridViewへ追加
         private void AddDataGridView(DataTable dt)
         {
-            //最大列数取得
-            //int maxRow = dt.Rows.Count;
-
             string className;
             string itemCD;
             string itemName;

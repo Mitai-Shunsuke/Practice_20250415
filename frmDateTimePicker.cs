@@ -13,12 +13,18 @@ namespace StockControlSystem
     public partial class frmDateTimePicker : Form
     {
         #region■プロパティ
-        //日付
+        //前の画面に渡すための日付
         public DateTime Date { get; private set; }
+
+        //戻るボタン用日付
+        private DateTime selectionDate;
         #endregion
-        public frmDateTimePicker()
+
+        public frmDateTimePicker(DateTime selectedDate)
         {
             InitializeComponent();
+            dateTimePicker1.Value = selectedDate;
+            selectionDate = selectedDate;
         }
 
         #region■ボタン
@@ -34,6 +40,7 @@ namespace StockControlSystem
         //戻るボタン
         private void btnBack_Click(object sender, EventArgs e)
         {
+            Date = selectionDate;
             this.Close();
         }
         #endregion

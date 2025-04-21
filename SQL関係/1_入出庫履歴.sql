@@ -9,3 +9,7 @@ IsReceived BIT,	--“üŒÉoroŒÉƒtƒ‰ƒO
 Moving INT,	--ˆÚ“®”
 StaffCD INT 	--’S“–ŽÒCD
 )
+
+
+ALTER TABLE ID_IO_HISTORY
+ADD Remarks NVARCHAR(50)

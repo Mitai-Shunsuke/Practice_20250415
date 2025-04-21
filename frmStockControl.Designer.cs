@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ItemClassName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemCD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Moving = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSearchClass1 = new System.Windows.Forms.Button();
@@ -49,11 +55,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.ItemClassName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ItemCD = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Moving = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -70,7 +71,8 @@
             this.ItemCD,
             this.ItemName,
             this.Date,
-            this.Moving});
+            this.Moving,
+            this.Remarks});
             this.dataGridView1.Location = new System.Drawing.Point(47, 198);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
@@ -78,9 +80,51 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(983, 291);
             this.dataGridView1.TabIndex = 12;
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
+            // 
+            // ItemClassName
+            // 
+            this.ItemClassName.HeaderText = "商品分類";
+            this.ItemClassName.MinimumWidth = 6;
+            this.ItemClassName.Name = "ItemClassName";
+            this.ItemClassName.Width = 96;
+            // 
+            // ItemCD
+            // 
+            this.ItemCD.HeaderText = "商品CD";
+            this.ItemCD.MinimumWidth = 6;
+            this.ItemCD.Name = "ItemCD";
+            this.ItemCD.Width = 86;
+            // 
+            // ItemName
+            // 
+            this.ItemName.HeaderText = "商品名";
+            this.ItemName.MinimumWidth = 6;
+            this.ItemName.Name = "ItemName";
+            this.ItemName.Width = 81;
+            // 
+            // Date
+            // 
+            this.Date.HeaderText = "入出庫日";
+            this.Date.MinimumWidth = 6;
+            this.Date.Name = "Date";
+            this.Date.Width = 96;
+            // 
+            // Moving
+            // 
+            this.Moving.HeaderText = "移動数";
+            this.Moving.MinimumWidth = 6;
+            this.Moving.Name = "Moving";
+            this.Moving.Width = 81;
+            // 
+            // Remarks
+            // 
+            this.Remarks.HeaderText = "備考欄";
+            this.Remarks.MinimumWidth = 6;
+            this.Remarks.Name = "Remarks";
+            this.Remarks.Width = 81;
             // 
             // label1
             // 
@@ -215,7 +259,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.0198F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.9802F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 290F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 294F));
             this.tableLayoutPanel2.Controls.Add(this.txtItemName, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.txtItemCD, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.txtClassCD2, 0, 1);
@@ -233,7 +277,7 @@
             // txtItemName
             // 
             this.txtItemName.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtItemName.Location = new System.Drawing.Point(204, 52);
+            this.txtItemName.Location = new System.Drawing.Point(202, 52);
             this.txtItemName.Name = "txtItemName";
             this.txtItemName.Size = new System.Drawing.Size(285, 22);
             this.txtItemName.TabIndex = 7;
@@ -241,9 +285,9 @@
             // txtItemCD
             // 
             this.txtItemCD.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtItemCD.Location = new System.Drawing.Point(100, 52);
+            this.txtItemCD.Location = new System.Drawing.Point(98, 52);
             this.txtItemCD.Name = "txtItemCD";
-            this.txtItemCD.Size = new System.Drawing.Size(97, 22);
+            this.txtItemCD.Size = new System.Drawing.Size(95, 22);
             this.txtItemCD.TabIndex = 6;
             this.txtItemCD.Validated += new System.EventHandler(this.txtItemCD_Validated);
             // 
@@ -253,14 +297,14 @@
             this.txtClassCD2.Location = new System.Drawing.Point(4, 52);
             this.txtClassCD2.Name = "txtClassCD2";
             this.txtClassCD2.ReadOnly = true;
-            this.txtClassCD2.Size = new System.Drawing.Size(89, 22);
+            this.txtClassCD2.Size = new System.Drawing.Size(87, 22);
             this.txtClassCD2.TabIndex = 5;
             this.txtClassCD2.TabStop = false;
             // 
             // label7
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label7.Location = new System.Drawing.Point(204, 3);
+            this.label7.Location = new System.Drawing.Point(202, 3);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(285, 37);
             this.label7.TabIndex = 4;
@@ -270,9 +314,9 @@
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.Location = new System.Drawing.Point(100, 3);
+            this.label6.Location = new System.Drawing.Point(98, 3);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 37);
+            this.label6.Size = new System.Drawing.Size(95, 37);
             this.label6.TabIndex = 3;
             this.label6.Text = "商品CD";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -282,7 +326,7 @@
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.Location = new System.Drawing.Point(4, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(89, 37);
+            this.label5.Size = new System.Drawing.Size(87, 37);
             this.label5.TabIndex = 2;
             this.label5.Text = "分類CD";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -297,41 +341,6 @@
             this.btnDelete.Text = "1行削除";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // ItemClassName
-            // 
-            this.ItemClassName.HeaderText = "商品分類";
-            this.ItemClassName.MinimumWidth = 6;
-            this.ItemClassName.Name = "ItemClassName";
-            this.ItemClassName.Width = 96;
-            // 
-            // ItemCD
-            // 
-            this.ItemCD.HeaderText = "商品CD";
-            this.ItemCD.MinimumWidth = 6;
-            this.ItemCD.Name = "ItemCD";
-            this.ItemCD.Width = 86;
-            // 
-            // ItemName
-            // 
-            this.ItemName.HeaderText = "商品名";
-            this.ItemName.MinimumWidth = 6;
-            this.ItemName.Name = "ItemName";
-            this.ItemName.Width = 81;
-            // 
-            // Date
-            // 
-            this.Date.HeaderText = "入出庫日";
-            this.Date.MinimumWidth = 6;
-            this.Date.Name = "Date";
-            this.Date.Width = 96;
-            // 
-            // Moving
-            // 
-            this.Moving.HeaderText = "移動数";
-            this.Moving.MinimumWidth = 6;
-            this.Moving.Name = "Moving";
-            this.Moving.Width = 81;
             // 
             // frmStockControl
             // 
@@ -388,5 +397,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn Moving;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Remarks;
     }
 }
