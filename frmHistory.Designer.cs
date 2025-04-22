@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnSearch = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnDebug = new System.Windows.Forms.Button();
@@ -39,8 +40,16 @@
             this.pnlIO = new System.Windows.Forms.Panel();
             this.pnlItem = new System.Windows.Forms.Panel();
             this.pnlDate = new System.Windows.Forms.Panel();
+            this.dtpEnd = new System.Windows.Forms.DateTimePicker();
+            this.dtpStart = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.pnlIO.SuspendLayout();
+            this.pnlDate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSearch
@@ -123,7 +132,7 @@
             // radioBtnOut
             // 
             this.radioBtnOut.AutoSize = true;
-            this.radioBtnOut.Location = new System.Drawing.Point(329, 23);
+            this.radioBtnOut.Location = new System.Drawing.Point(447, 23);
             this.radioBtnOut.Name = "radioBtnOut";
             this.radioBtnOut.Size = new System.Drawing.Size(83, 19);
             this.radioBtnOut.TabIndex = 7;
@@ -152,10 +161,44 @@
             // pnlDate
             // 
             this.pnlDate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlDate.Controls.Add(this.dtpEnd);
+            this.pnlDate.Controls.Add(this.dtpStart);
+            this.pnlDate.Controls.Add(this.label1);
             this.pnlDate.Location = new System.Drawing.Point(55, 315);
             this.pnlDate.Name = "pnlDate";
             this.pnlDate.Size = new System.Drawing.Size(802, 66);
             this.pnlDate.TabIndex = 9;
+            // 
+            // dtpEnd
+            // 
+            this.dtpEnd.Location = new System.Drawing.Point(447, 20);
+            this.dtpEnd.Name = "dtpEnd";
+            this.dtpEnd.Size = new System.Drawing.Size(200, 22);
+            this.dtpEnd.TabIndex = 2;
+            // 
+            // dtpStart
+            // 
+            this.dtpStart.Location = new System.Drawing.Point(150, 19);
+            this.dtpStart.Name = "dtpStart";
+            this.dtpStart.Size = new System.Drawing.Size(200, 22);
+            this.dtpStart.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(351, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 23);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "～";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // errorProvider2
+            // 
+            this.errorProvider2.ContainerControl = this;
             // 
             // frmHistory
             // 
@@ -176,6 +219,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.pnlIO.ResumeLayout(false);
             this.pnlIO.PerformLayout();
+            this.pnlDate.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,5 +240,10 @@
         private System.Windows.Forms.Panel pnlIO;
         private System.Windows.Forms.Panel pnlItem;
         private System.Windows.Forms.Panel pnlDate;
+        private System.Windows.Forms.DateTimePicker dtpEnd;
+        private System.Windows.Forms.DateTimePicker dtpStart;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider2;
     }
 }

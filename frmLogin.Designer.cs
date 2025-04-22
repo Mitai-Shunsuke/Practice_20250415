@@ -44,7 +44,7 @@
             this.btnLogin.Location = new System.Drawing.Point(205, 272);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(358, 53);
-            this.btnLogin.TabIndex = 0;
+            this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "ログイン";
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
@@ -77,7 +77,7 @@
             this.txtStaffICD.Location = new System.Drawing.Point(205, 121);
             this.txtStaffICD.Name = "txtStaffICD";
             this.txtStaffICD.Size = new System.Drawing.Size(234, 34);
-            this.txtStaffICD.TabIndex = 4;
+            this.txtStaffICD.TabIndex = 0;
             this.txtStaffICD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStaffICD.Validated += new System.EventHandler(this.txtStaffICD_Validated);
             // 
@@ -88,7 +88,7 @@
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '●';
             this.txtPass.Size = new System.Drawing.Size(468, 34);
-            this.txtPass.TabIndex = 5;
+            this.txtPass.TabIndex = 2;
             this.txtPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label1

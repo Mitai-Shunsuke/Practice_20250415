@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace StockControlSystem
 {
@@ -17,13 +18,13 @@ namespace StockControlSystem
         //コンストラクタ
         pgSelectSQL bat = new pgSelectSQL();
 
-
         #endregion
         public frmHistory()
         {
             InitializeComponent();
 
             //ラジオボタン
+            radioBtnIn.Checked = true;
             radioBtnIn.Enabled = false;
             radioBtnOut.Enabled = false;
 
@@ -31,49 +32,56 @@ namespace StockControlSystem
             pnlIO.BackColor = Color.Gainsboro;
             pnlItem.BackColor = Color.Gainsboro;
             pnlDate.BackColor = Color.Gainsboro;
+
+            //カレンダー
+            dtpStart.Enabled = false;
+            dtpEnd.Enabled = false;
         }
 
         #region■イベント
-        //チェックボタン（入出庫）
+        //チェックボタン（入出庫指定）
         private void checkBoxIO_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBoxIO.Checked)
+            //背景色
+            pnlIO.BackColor = checkBoxItem.Checked ? Color.Honeydew : Color.Gainsboro;
+
+            //ボタン有効化
+            if (checkBoxIO.Checked)
             {
                 radioBtnIn.Enabled = true;
                 radioBtnOut.Enabled = true;
-                pnlIO.BackColor = Color.Honeydew;
             }
             else
             {
                 radioBtnIn.Enabled = false;
                 radioBtnOut.Enabled = false;
-                pnlIO.BackColor= Color.Gainsboro;
             }
         }
 
         //チェックボタン（商品分類、商品）
         private void checkBoxItem_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBoxItem.Checked)
-            {
-                pnlItem.BackColor = Color.Honeydew;
-            }
-            else
-            {
-                pnlItem.BackColor = Color.Gainsboro;
-            }
+            //背景色
+            pnlDate.BackColor = checkBoxItem.Checked ? Color.Honeydew : Color.Gainsboro;
+
         }
 
         //チェックボタン（登録期間）
         private void checkBoxDate_CheckedChanged(object sender, EventArgs e)
         {
+            //背景色
+            pnlDate.BackColor = checkBoxDate.Checked ? Color.Honeydew : Color.Gainsboro;
+
+            //カレンダー有効化
             if (checkBoxDate.Checked)
             {
-                pnlDate.BackColor = Color.Honeydew;
+                dtpStart.Enabled = true;
+                dtpEnd.Enabled = true;
             }
             else
             {
-                pnlDate.BackColor = Color.Gainsboro;
+                dtpStart.Enabled = false;
+                dtpEnd.Enabled = false;
             }
         }
         #endregion
@@ -83,11 +91,15 @@ namespace StockControlSystem
         //検索ボタン
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            //日付チェック
+            if (!CheckDate()) return;
+
             //SQL作成
             string query = CreateSQL_Select();
 
             //パラメータ追加
             List<SqlParameter> parameters = new List<SqlParameter>();
+            parameters = AddParameter();
 
             //実行
             DataTable dt = new DataTable();
@@ -108,24 +120,20 @@ namespace StockControlSystem
             sb.AppendLine(",ItemClassName AS '商品分類'");
             sb.AppendLine(",ItemCD AS '商品CD'");
             sb.AppendLine(",ItemName AS '商品名'");
-            
-            if(checkBoxIO.Checked && radioBtnIn.Checked && radioBtnOut.Checked)
-            {
 
+            if (checkBoxIO.Checked && radioBtnIn.Checked)
+            {
+                sb.AppendLine(",SUM(入庫数) AS '入庫数'");
             }
-            else if(checkBoxIO.Checked && radioBtnIn.Checked)
+            else if (checkBoxIO.Checked && radioBtnOut.Checked)
             {
-
-            }
-            else if(checkBoxIO.Checked && radioBtnOut.Checked)
-            {
-
+                sb.AppendLine(",SUM(出庫数) AS '出庫数'");
             }
             else
             {
-
+                sb.AppendLine(",SUM(初期在庫数 + 入庫数 - 出庫数) AS '在庫数'");
             }
-            sb.AppendLine(",SUM(初期在庫数 + 入庫数 - 出庫数) AS '在庫数'");
+
             sb.AppendLine("FROM");
             sb.AppendLine("(");
             sb.AppendLine("	SELECT ");
@@ -139,6 +147,27 @@ namespace StockControlSystem
             sb.AppendLine("	FROM ID_IO_HISTORY H");
             sb.AppendLine("	INNER JOIN IM_ITEM I ON H.ItemCD = I.ItemCD");
             sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD");
+            sb.AppendLine("WHERE 1=1");
+
+            //①入出庫条件（ラジオボタン）
+            if (checkBoxIO.Checked && radioBtnIn.Checked)
+            {
+                sb.AppendLine("AND Remarks NOT LIKE N'初期在庫'");
+                sb.AppendLine("	AND IsReceived = 'True' ");
+            }
+            else if (checkBoxIO.Checked && radioBtnOut.Checked)
+            {
+                sb.AppendLine("AND Remarks NOT LIKE N'初期在庫'");
+                sb.AppendLine("	AND IsReceived = 'False' ");
+            }
+            
+            //③日付期間条件
+            if(checkBoxDate.Checked)
+            {
+                sb.AppendLine("	AND @startDate<= IODate");
+                sb.AppendLine("	AND IODate <= @endDate");
+            }
+
             sb.AppendLine("	GROUP BY  IC.ItemClassCD");
             sb.AppendLine("	,IC.ItemClassName");
             sb.AppendLine("	,H.ItemCD");
@@ -153,6 +182,45 @@ namespace StockControlSystem
         }
         #endregion
 
+        #region■パラメータ追加
+        private List<SqlParameter> AddParameter()
+        {
+            List<SqlParameter> parameters = new List<SqlParameter>();
+
+            //③日付
+            if(checkBoxDate.Checked)
+            {
+                parameters.Add(new SqlParameter("@startDate", dtpStart.Value.ToString("yyyy/MM/dd")));
+                parameters.Add(new SqlParameter("@endDate", dtpEnd.Value.ToString("yyyy/MM/dd")));
+            }
+
+            return parameters;
+        }
+
+        #endregion
+
+        #region■入力チェック
+        //検索条件チェック（日付）
+        private bool CheckDate()
+        {
+            if (checkBoxDate.Checked)
+            {
+                if(dtpStart.Value == dtpEnd.Value)
+                {
+                    return true;
+                }
+                else if (dtpStart.Value > dtpEnd.Value)
+                {
+                    MessageBox.Show("入出庫期間を修正してください。");
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        #endregion
+
         #region■デバッグ用（入出庫管理画面ボタン）
         private void btnDebug_Click(object sender, EventArgs e)
         {
@@ -161,5 +229,6 @@ namespace StockControlSystem
         }
 
         #endregion
+
     }
 }
