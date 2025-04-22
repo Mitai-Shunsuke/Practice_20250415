@@ -53,11 +53,11 @@
     <Compile Include="frmDateTimePicker.Designer.cs">
       <DependentUpon>frmDateTimePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmHistory.cs">
+    <Compile Include="frmNowStocks.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmHistory.Designer.cs">
-      <DependentUpon>frmHistory.cs</DependentUpon>
+    <Compile Include="frmNowStocks.Designer.cs">
+      <DependentUpon>frmNowStocks.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
@@ -70,6 +70,12 @@
     </Compile>
     <Compile Include="frmMainMenu.Designer.cs">
       <DependentUpon>frmMainMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSearch.Designer.cs">
+      <DependentUpon>frmSearch.cs</DependentUpon>
     </Compile>
     <Compile Include="frmStockControl.cs">
       <SubType>Form</SubType>
@@ -84,14 +90,17 @@
     <EmbeddedResource Include="frmDateTimePicker.resx">
       <DependentUpon>frmDateTimePicker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmHistory.resx">
-      <DependentUpon>frmHistory.cs</DependentUpon>
+    <EmbeddedResource Include="frmNowStocks.resx">
+      <DependentUpon>frmNowStocks.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMainMenu.resx">
       <DependentUpon>frmMainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSearch.resx">
+      <DependentUpon>frmSearch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStockControl.resx">
       <DependentUpon>frmStockControl.cs</DependentUpon>

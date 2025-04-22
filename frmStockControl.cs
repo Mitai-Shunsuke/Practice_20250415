@@ -43,7 +43,7 @@ namespace StockControlSystem
         }
 
         #region■イベント
-        //分類CD
+        //分類CD入力
         private void txtClassCD_Validated(object sender, EventArgs e)
         {
             //入力チェック
@@ -74,7 +74,7 @@ namespace StockControlSystem
             }
         }
 
-        //商品CD
+        //商品CD入力
         private void txtItemCD_Validated(object sender, EventArgs e)
         {
             //入力チェック
@@ -155,6 +155,20 @@ namespace StockControlSystem
         #endregion
 
         #region■ボタン
+        //検索ボタン（分類）
+        private void btnSearchClass_Click(object sender, EventArgs e)
+        {
+            frmSearch frmSearch = new frmSearch("Class");
+            frmSearch.ShowDialog();
+
+            //検索値を適応
+            if (frmSearch.valueCD == null)
+            {
+                return;
+            }
+            txtClassCD.Text = frmSearch.valueCD;
+            txtClassName.Text = frmSearch.valueName;
+        }
 
         //追加ボタン（分類）
         private void btnAddGrid_Class_Click(object sender, EventArgs e)
@@ -180,6 +194,20 @@ namespace StockControlSystem
             AddDataGridView(dt);
         }
 
+        //検索ボタン（商品）
+        private void btnSearchItem_Click(object sender, EventArgs e)
+        {
+            frmSearch frmSearch = new frmSearch("Item");
+            frmSearch.ShowDialog();
+
+            //検索値を適応
+            if(frmSearch.valueCD == null)
+            {
+                return;
+            }
+            txtItemCD.Text = frmSearch.valueCD;
+            txtItemName.Text = frmSearch.valueName;
+        }
         //追加ボタン（商品）
         private void btnAddGrid_Item_Click(object sender, EventArgs e)
         {
@@ -507,5 +535,6 @@ namespace StockControlSystem
 
 
         #endregion
+
     }
 }

@@ -39,7 +39,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnSearchClass1 = new System.Windows.Forms.Button();
             this.btnAddGrid_Class = new System.Windows.Forms.Button();
-            this.btnSearchClass2 = new System.Windows.Forms.Button();
+            this.btnSearchItem = new System.Windows.Forms.Button();
             this.btnAddGrid_Item = new System.Windows.Forms.Button();
             this.btnInsert = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -146,13 +146,14 @@
             // 
             // btnSearchClass1
             // 
-            this.btnSearchClass1.BackColor = System.Drawing.Color.SpringGreen;
+            this.btnSearchClass1.BackColor = System.Drawing.Color.Pink;
             this.btnSearchClass1.Location = new System.Drawing.Point(180, 141);
             this.btnSearchClass1.Name = "btnSearchClass1";
             this.btnSearchClass1.Size = new System.Drawing.Size(110, 34);
             this.btnSearchClass1.TabIndex = 3;
             this.btnSearchClass1.Text = "分類検索";
             this.btnSearchClass1.UseVisualStyleBackColor = false;
+            this.btnSearchClass1.Click += new System.EventHandler(this.btnSearchClass_Click);
             // 
             // btnAddGrid_Class
             // 
@@ -165,15 +166,16 @@
             this.btnAddGrid_Class.UseVisualStyleBackColor = false;
             this.btnAddGrid_Class.Click += new System.EventHandler(this.btnAddGrid_Class_Click);
             // 
-            // btnSearchClass2
+            // btnSearchItem
             // 
-            this.btnSearchClass2.BackColor = System.Drawing.Color.SpringGreen;
-            this.btnSearchClass2.Location = new System.Drawing.Point(920, 141);
-            this.btnSearchClass2.Name = "btnSearchClass2";
-            this.btnSearchClass2.Size = new System.Drawing.Size(110, 34);
-            this.btnSearchClass2.TabIndex = 8;
-            this.btnSearchClass2.Text = "分類検索";
-            this.btnSearchClass2.UseVisualStyleBackColor = false;
+            this.btnSearchItem.BackColor = System.Drawing.Color.LightYellow;
+            this.btnSearchItem.Location = new System.Drawing.Point(920, 141);
+            this.btnSearchItem.Name = "btnSearchItem";
+            this.btnSearchItem.Size = new System.Drawing.Size(110, 34);
+            this.btnSearchItem.TabIndex = 8;
+            this.btnSearchItem.Text = "商品検索";
+            this.btnSearchItem.UseVisualStyleBackColor = false;
+            this.btnSearchItem.Click += new System.EventHandler(this.btnSearchItem_Click);
             // 
             // btnAddGrid_Item
             // 
@@ -259,7 +261,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.0198F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.9802F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 294F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 298F));
             this.tableLayoutPanel2.Controls.Add(this.txtItemName, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.txtItemCD, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.txtClassCD2, 0, 1);
@@ -277,7 +279,7 @@
             // txtItemName
             // 
             this.txtItemName.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtItemName.Location = new System.Drawing.Point(202, 52);
+            this.txtItemName.Location = new System.Drawing.Point(200, 52);
             this.txtItemName.Name = "txtItemName";
             this.txtItemName.Size = new System.Drawing.Size(285, 22);
             this.txtItemName.TabIndex = 7;
@@ -285,9 +287,9 @@
             // txtItemCD
             // 
             this.txtItemCD.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtItemCD.Location = new System.Drawing.Point(98, 52);
+            this.txtItemCD.Location = new System.Drawing.Point(96, 52);
             this.txtItemCD.Name = "txtItemCD";
-            this.txtItemCD.Size = new System.Drawing.Size(95, 22);
+            this.txtItemCD.Size = new System.Drawing.Size(93, 22);
             this.txtItemCD.TabIndex = 6;
             this.txtItemCD.Validated += new System.EventHandler(this.txtItemCD_Validated);
             // 
@@ -297,14 +299,14 @@
             this.txtClassCD2.Location = new System.Drawing.Point(4, 52);
             this.txtClassCD2.Name = "txtClassCD2";
             this.txtClassCD2.ReadOnly = true;
-            this.txtClassCD2.Size = new System.Drawing.Size(87, 22);
+            this.txtClassCD2.Size = new System.Drawing.Size(85, 22);
             this.txtClassCD2.TabIndex = 5;
             this.txtClassCD2.TabStop = false;
             // 
             // label7
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label7.Location = new System.Drawing.Point(202, 3);
+            this.label7.Location = new System.Drawing.Point(200, 3);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(285, 37);
             this.label7.TabIndex = 4;
@@ -314,9 +316,9 @@
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.Location = new System.Drawing.Point(98, 3);
+            this.label6.Location = new System.Drawing.Point(96, 3);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(95, 37);
+            this.label6.Size = new System.Drawing.Size(93, 37);
             this.label6.TabIndex = 3;
             this.label6.Text = "商品CD";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -326,7 +328,7 @@
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.Location = new System.Drawing.Point(4, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(87, 37);
+            this.label5.Size = new System.Drawing.Size(85, 37);
             this.label5.TabIndex = 2;
             this.label5.Text = "分類CD";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -352,7 +354,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btnInsert);
             this.Controls.Add(this.btnAddGrid_Item);
-            this.Controls.Add(this.btnSearchClass2);
+            this.Controls.Add(this.btnSearchItem);
             this.Controls.Add(this.btnAddGrid_Class);
             this.Controls.Add(this.btnSearchClass1);
             this.Controls.Add(this.label2);
@@ -376,7 +378,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSearchClass1;
         private System.Windows.Forms.Button btnAddGrid_Class;
-        private System.Windows.Forms.Button btnSearchClass2;
+        private System.Windows.Forms.Button btnSearchItem;
         private System.Windows.Forms.Button btnAddGrid_Item;
         private System.Windows.Forms.Button btnInsert;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

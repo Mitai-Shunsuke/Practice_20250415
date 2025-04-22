@@ -1,6 +1,6 @@
 ﻿namespace StockControlSystem
 {
-    partial class frmHistory
+    partial class frmNowStocks
     {
         /// <summary>
         /// Required designer variable.
@@ -215,7 +215,7 @@
             this.Controls.Add(this.pnlItem);
             this.Controls.Add(this.pnlDate);
             this.Name = "frmHistory";
-            this.Text = "入出庫管理";
+            this.Text = "現在庫管理";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.pnlIO.ResumeLayout(false);
             this.pnlIO.PerformLayout();

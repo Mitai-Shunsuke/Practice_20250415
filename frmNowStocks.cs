@@ -12,14 +12,16 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace StockControlSystem
 {
-    public partial class frmHistory : Form
+    public partial class frmNowStocks : Form
     {
         #region■プロパティ
         //コンストラクタ
         pgSelectSQL bat = new pgSelectSQL();
 
         #endregion
-        public frmHistory()
+
+        #region■ロード
+        public frmNowStocks()
         {
             InitializeComponent();
 
@@ -37,6 +39,7 @@ namespace StockControlSystem
             dtpStart.Enabled = false;
             dtpEnd.Enabled = false;
         }
+        #endregion
 
         #region■イベント
         //チェックボタン（入出庫指定）
@@ -141,9 +144,9 @@ namespace StockControlSystem
             sb.AppendLine("	,IC.ItemClassName");
             sb.AppendLine("	,H.ItemCD");
             sb.AppendLine("	,I.ItemName");
-            sb.AppendLine("	,SUM(CASE WHEN Remarks LIKE N'初期在庫' THEN Moving ELSE 0 END) AS '初期在庫数'");
-            sb.AppendLine("	,SUM(CASE WHEN IsReceived = 'True' AND Remarks NOT LIKE N'初期在庫' THEN Moving ELSE 0 END) AS '入庫数'");
-            sb.AppendLine("	,SUM(CASE WHEN IsReceived = 'False' AND Remarks NOT LIKE N'初期在庫' THEN Moving ELSE 0 END) AS '出庫数'");
+            sb.AppendLine("	,SUM(CASE WHEN H.Remarks LIKE N'初期在庫' THEN H.Moving ELSE 0 END) AS '初期在庫数'");
+            sb.AppendLine("	,SUM(CASE WHEN H.IsReceived = 'True' AND H.Remarks NOT LIKE N'初期在庫' THEN H.Moving ELSE 0 END) AS '入庫数'");
+            sb.AppendLine("	,SUM(CASE WHEN H.IsReceived = 'False' AND H.Remarks NOT LIKE N'初期在庫' THEN H.Moving ELSE 0 END) AS '出庫数'");
             sb.AppendLine("	FROM ID_IO_HISTORY H");
             sb.AppendLine("	INNER JOIN IM_ITEM I ON H.ItemCD = I.ItemCD");
             sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD");
@@ -152,20 +155,20 @@ namespace StockControlSystem
             //①入出庫条件（ラジオボタン）
             if (checkBoxIO.Checked && radioBtnIn.Checked)
             {
-                sb.AppendLine("AND Remarks NOT LIKE N'初期在庫'");
-                sb.AppendLine("	AND IsReceived = 'True' ");
+                sb.AppendLine("AND H.Remarks NOT LIKE N'初期在庫'");
+                sb.AppendLine("	AND H.IsReceived = 'True' ");
             }
             else if (checkBoxIO.Checked && radioBtnOut.Checked)
             {
-                sb.AppendLine("AND Remarks NOT LIKE N'初期在庫'");
-                sb.AppendLine("	AND IsReceived = 'False' ");
+                sb.AppendLine("AND H.Remarks NOT LIKE N'初期在庫'");
+                sb.AppendLine("	AND H.IsReceived = 'False' ");
             }
             
             //③日付期間条件
             if(checkBoxDate.Checked)
             {
-                sb.AppendLine("	AND @startDate<= IODate");
-                sb.AppendLine("	AND IODate <= @endDate");
+                sb.AppendLine("	AND @startDate<= H.IODate");
+                sb.AppendLine("	AND H.IODate <= @endDate");
             }
 
             sb.AppendLine("	GROUP BY  IC.ItemClassCD");
@@ -218,7 +221,6 @@ namespace StockControlSystem
             
             return true;
         }
-
         #endregion
 
         #region■デバッグ用（入出庫管理画面ボタン）

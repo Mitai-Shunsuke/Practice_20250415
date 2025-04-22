@@ -37,7 +37,7 @@ namespace StockControlSystem
         //現在庫管理ボタン
         private void btnStockControl_Click(object sender, EventArgs e)
         {
-            frmHistory frmHistory = new frmHistory();
+            frmNowStocks frmHistory = new frmNowStocks();
             frmHistory.ShowDialog();
         }
         //入出庫管理ボタン
