@@ -54,7 +54,7 @@ namespace StockControlSystem
 
             //SQL作成
             String query = CreateSQL_Select(true);
-
+                        
             //パラメーター追加
             List<SqlParameter> parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("ItemClassCD", txtClassCD.Text));
@@ -64,7 +64,7 @@ namespace StockControlSystem
             dt = bat.SelectSQL(query, parameters);
 
             //表示
-            if(dt.Rows.Count > 0)
+            if (dt.Rows.Count > 0)
             {
                 txtClassName.Text = dt.Rows[0]["ItemClassName"].ToString();
             }
@@ -104,7 +104,6 @@ namespace StockControlSystem
             {
                 MessageBox.Show($"分類CD：「{txtItemCD.Text}」は、存在しません。");
             }
-
         }
 
         //DataGridViewのセル選択変更
@@ -162,19 +161,20 @@ namespace StockControlSystem
             frmSearch.ShowDialog();
 
             //検索値を適応
-            if (frmSearch.valueCD == null)
+            if (frmSearch.flg == true)
             {
-                return;
+                txtClassCD.Text = frmSearch.valueCD;
+                txtClassName.Text = frmSearch.valueName;
             }
-            txtClassCD.Text = frmSearch.valueCD;
-            txtClassName.Text = frmSearch.valueName;
+
+            frmSearch.Dispose();
         }
 
         //追加ボタン（分類）
         private void btnAddGrid_Class_Click(object sender, EventArgs e)
         {
             //入力チェック（空白）
-            if(txtClassName.Text == "")
+            if (txtClassName.Text == "")
             {
                 return;
             }
@@ -201,12 +201,13 @@ namespace StockControlSystem
             frmSearch.ShowDialog();
 
             //検索値を適応
-            if(frmSearch.valueCD == null)
+            if (frmSearch.flg == true)
             {
-                return;
+                txtItemCD.Text = frmSearch.valueCD;
+                txtItemName.Text = frmSearch.valueName;
             }
-            txtItemCD.Text = frmSearch.valueCD;
-            txtItemName.Text = frmSearch.valueName;
+
+            frmSearch.Dispose();
         }
         //追加ボタン（商品）
         private void btnAddGrid_Item_Click(object sender, EventArgs e)
@@ -454,13 +455,13 @@ namespace StockControlSystem
             }
 
             //空白チェック
-            if(text == "")
+            if (text == "")
             {
                 return false;
             }
 
             //数字チェック
-            if(!int.TryParse(text, out int i))
+            if (!int.TryParse(text, out int i))
             {
                 MessageBox.Show($"{Error}は数字で入力してください。");
                 return false;
@@ -532,9 +533,6 @@ namespace StockControlSystem
             //列の挿入インデックス
             dataGridView1.Columns.Insert(4, cmbColumn);
         }
-
-
         #endregion
-
     }
 }

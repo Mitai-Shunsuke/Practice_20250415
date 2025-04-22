@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmControlSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="frmControlSearch.Designer.cs">
+      <DependentUpon>frmControlSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDateTimePicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
     <Compile Include="pgSelectSQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmControlSearch.resx">
+      <DependentUpon>frmControlSearch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDateTimePicker.resx">
       <DependentUpon>frmDateTimePicker.cs</DependentUpon>
     </EmbeddedResource>

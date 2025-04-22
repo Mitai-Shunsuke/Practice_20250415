@@ -26,6 +26,9 @@ namespace StockControlSystem
         //入出庫管理画面へ返す名称
         public string valueName { get; private set; }
 
+        //反映するかどうかのフラグ
+        public bool flg { get; private set; }
+
         #endregion
 
         #region■ロード
@@ -36,6 +39,8 @@ namespace StockControlSystem
 
             Type = type;
 
+            flg = false;
+
             //表示設定
             LoadDisplay();
 
@@ -45,7 +50,10 @@ namespace StockControlSystem
         //初期画面表示
         private void LoadDisplay()
         {
-            if(Type == "Class")
+            btnSelection.Enabled = false;
+            btnSelection.BackColor = Color.Gray;
+
+            if (Type == "Class")
             {
                 lblType.Text = "分類検索";
                 this.BackColor = Color.Pink;
@@ -62,17 +70,21 @@ namespace StockControlSystem
         //DataGridViewダブルクリック
         private void dgv1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //CDを取得
-            valueCD = dgv1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            //ヘッダーダブルクリックの時は抜ける
+            if(e.RowIndex == -1) return;
+            if (e.ColumnIndex == -1) return;
 
-            //名称を取得
+            //CDと名称を取得
+            valueCD = dgv1.Rows[e.RowIndex].Cells[0].Value.ToString();
             valueName = dgv1.Rows[e.RowIndex].Cells[1].Value.ToString();
 
-            //CDを表示
-            txtSelectCD.Text = valueCD;
-
-            //名称を表示
+            //CDと名称を表示
+            txtSelectCD.Text = "【" + valueCD + "】";
             txtSelectName.Text = valueName;
+
+            //適応して戻る活性化
+            btnSelection.Enabled = true;
+            btnSelection.BackColor = Color.DodgerBlue;
         }
         #endregion
 
@@ -81,11 +93,9 @@ namespace StockControlSystem
         private void button1_Click(object sender, EventArgs e)
         {
             //入力チェック
-            if (txtSearch.Text == "")
-            {
-                return;
-            }
-            else if (Type == "Class")
+            if (txtSearch.Text == "")　return;
+            
+            if (Type == "Class")
             {
                 //分類検索
                 SearchClass();
@@ -95,12 +105,13 @@ namespace StockControlSystem
                 //商品検索
                 SearchItem();
             }
-
         }
 
         //適用して戻るボタン
         private void btnSelection_Click(object sender, EventArgs e)
         {
+            //入出庫管理画面に適応する
+            flg = true;
             this.Close();
         }
 
@@ -108,7 +119,6 @@ namespace StockControlSystem
         private void btnBack_Click(object sender, EventArgs e)
         {
             //入出庫管理画面に適応しない
-            valueCD = null;
             this.Close();
         }
         #endregion
