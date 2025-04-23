@@ -47,11 +47,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CtrFrmSearchClass.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtrFrmSearchClass.Designer.cs">
+      <DependentUpon>CtrFrmSearchClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtrFrmSearchItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtrFrmSearchItem.Designer.cs">
+      <DependentUpon>CtrFrmSearchItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDateTimePicker.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDateTimePicker.Designer.cs">
       <DependentUpon>frmDateTimePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmNowStocks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNowStocks.Designer.cs">
+      <DependentUpon>frmNowStocks.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
@@ -65,6 +83,12 @@
     <Compile Include="frmMainMenu.Designer.cs">
       <DependentUpon>frmMainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSearch.Designer.cs">
+      <DependentUpon>frmSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmStockControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,14 +99,26 @@
     <Compile Include="pgSelectSQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CtrFrmSearchClass.resx">
+      <DependentUpon>CtrFrmSearchClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtrFrmSearchItem.resx">
+      <DependentUpon>CtrFrmSearchItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDateTimePicker.resx">
       <DependentUpon>frmDateTimePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNowStocks.resx">
+      <DependentUpon>frmNowStocks.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMainMenu.resx">
       <DependentUpon>frmMainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSearch.resx">
+      <DependentUpon>frmSearch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStockControl.resx">
       <DependentUpon>frmStockControl.cs</DependentUpon>

@@ -43,70 +43,6 @@ namespace StockControlSystem
         }
 
         #region■イベント
-        //分類CD
-        private void txtClassCD_Validated(object sender, EventArgs e)
-        {
-            //入力チェック
-            if(!checkInput("Class"))
-            {
-                return;
-            }
-
-            //SQL作成
-            String query = CreateSQL_Select(true);
-
-            //パラメーター追加
-            List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("ItemClassCD", txtClassCD.Text));
-
-            //実行
-            DataTable dt = new DataTable();
-            dt = bat.SelectSQL(query, parameters);
-
-            //表示
-            if(dt.Rows.Count > 0)
-            {
-                txtClassName.Text = dt.Rows[0]["ItemClassName"].ToString();
-            }
-            else
-            {
-                MessageBox.Show($"分類CD：「{txtClassCD.Text}」は、存在しません。");
-            }
-        }
-
-        //商品CD
-        private void txtItemCD_Validated(object sender, EventArgs e)
-        {
-            //入力チェック
-            if (!checkInput("Item"))
-            {
-                return;
-            }
-
-            //SQL作成
-            String query = CreateSQL_Select(false);
-
-            //パラメーター追加
-            List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("ItemCD", txtItemCD.Text));
-
-            //実行
-            DataTable dt = new DataTable();
-            dt = bat.SelectSQL(query, parameters);
-
-            //表示
-            if (dt.Rows.Count > 0)
-            {
-                txtClassCD2.Text = dt.Rows[0]["ItemClassCD"].ToString();
-                txtItemName.Text = dt.Rows[0]["ItemName"].ToString();
-            }
-            else
-            {
-                MessageBox.Show($"分類CD：「{txtItemCD.Text}」は、存在しません。");
-            }
-
-        }
-
         //DataGridViewのセル選択変更
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
@@ -123,7 +59,6 @@ namespace StockControlSystem
         }
 
         //DataGridViewのダブルクリック
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //セル取得
@@ -156,12 +91,11 @@ namespace StockControlSystem
         #endregion
 
         #region■ボタン
-
         //追加ボタン（分類）
         private void btnAddGrid_Class_Click(object sender, EventArgs e)
         {
             //入力チェック（空白）
-            if(txtClassName.Text == "")
+            if (ctrFrmSearchClass1.txtClassName.Text == "")
             {
                 return;
             }
@@ -171,8 +105,8 @@ namespace StockControlSystem
 
             //パラメーター追加
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("ItemClassCD", txtClassCD.Text));
-
+            parameters.Add(new SqlParameter("ItemClassCD", ctrFrmSearchClass1.txtClassCD.Text));
+            
             //実行
             DataTable dt = new DataTable();
             dt = bat.SelectSQL(query, parameters);
@@ -185,7 +119,7 @@ namespace StockControlSystem
         private void btnAddGrid_Item_Click(object sender, EventArgs e)
         {
             //入力チェック（空白）
-            if (txtItemName.Text == "")
+            if (ctrFrmSearchItem1.txtItemName.Text == "")
             {
                 return;
             }
@@ -195,7 +129,7 @@ namespace StockControlSystem
 
             //パラメーター追加
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("ItemCD", txtItemCD.Text));
+            parameters.Add(new SqlParameter("ItemCD", ctrFrmSearchItem1.txtItemCD.Text));
 
             //実行
             DataTable dt = new DataTable();
@@ -309,7 +243,7 @@ namespace StockControlSystem
                 
                 AddParam(parameter, GetSqlParameterStaffCD());//StaffCD
                 
-                //6項目すべて有効なときだけ追加
+                //６項目すべて有効なときだけ追加
                 if (parameter.Count < 6)
                 {
                     return null;
@@ -409,45 +343,6 @@ namespace StockControlSystem
         }
         #endregion
 
-        #region■入力チェック
-        //分類CD、商品CD
-        private bool checkInput(string btnCategory)
-        {
-            string text;
-            string Error;
-            if (btnCategory == "Class")
-            {
-                text = txtClassCD.Text;
-                Error = "分類CD";
-            }
-            else
-            {
-                text = txtItemCD.Text;
-                Error = "商品CD";
-            }
-
-            //空白チェック
-            if(text == "")
-            {
-                return false;
-            }
-
-            //数字チェック
-            if(!int.TryParse(text, out int i))
-            {
-                MessageBox.Show($"{Error}は数字で入力してください。");
-                return false;
-            }
-
-            return true;
-        }
-
-        //private bool checkDgv()
-        //{
-
-        //}
-        #endregion
-
         #region■DataGridViewへ追加
         private void AddDataGridView(DataTable dt)
         {
@@ -505,8 +400,6 @@ namespace StockControlSystem
             //列の挿入インデックス
             dataGridView1.Columns.Insert(4, cmbColumn);
         }
-
-
         #endregion
     }
 }
