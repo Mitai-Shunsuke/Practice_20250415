@@ -39,14 +39,17 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnAddGrid_Class = new System.Windows.Forms.Button();
             this.btnAddGrid_Item = new System.Windows.Forms.Button();
-            this.ctrFrmSearch1 = new StockControlSystem.CtrFrmSearch();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.ctrFrmSearchClass1 = new StockControlSystem.CtrFrmSearchClass();
+            this.ctrFrmSearchItem1 = new StockControlSystem.CtrFrmSearchItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnInsert
             // 
             this.btnInsert.BackColor = System.Drawing.Color.OrangeRed;
-            this.btnInsert.Location = new System.Drawing.Point(1072, 418);
+            this.btnInsert.Location = new System.Drawing.Point(962, 459);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(110, 71);
             this.btnInsert.TabIndex = 10;
@@ -57,7 +60,7 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnDelete.Location = new System.Drawing.Point(1072, 320);
+            this.btnDelete.Location = new System.Drawing.Point(962, 366);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(110, 71);
             this.btnDelete.TabIndex = 9;
@@ -120,12 +123,12 @@
             this.Date,
             this.Moving,
             this.Remarks});
-            this.dataGridView1.Location = new System.Drawing.Point(47, 239);
+            this.dataGridView1.Location = new System.Drawing.Point(28, 185);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(983, 291);
+            this.dataGridView1.Size = new System.Drawing.Size(928, 345);
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
@@ -134,7 +137,7 @@
             // btnAddGrid_Class
             // 
             this.btnAddGrid_Class.BackColor = System.Drawing.Color.Yellow;
-            this.btnAddGrid_Class.Location = new System.Drawing.Point(333, 156);
+            this.btnAddGrid_Class.Location = new System.Drawing.Point(185, 129);
             this.btnAddGrid_Class.Name = "btnAddGrid_Class";
             this.btnAddGrid_Class.Size = new System.Drawing.Size(110, 34);
             this.btnAddGrid_Class.TabIndex = 7;
@@ -145,7 +148,7 @@
             // btnAddGrid_Item
             // 
             this.btnAddGrid_Item.BackColor = System.Drawing.Color.Yellow;
-            this.btnAddGrid_Item.Location = new System.Drawing.Point(892, 156);
+            this.btnAddGrid_Item.Location = new System.Drawing.Point(709, 129);
             this.btnAddGrid_Item.Name = "btnAddGrid_Item";
             this.btnAddGrid_Item.Size = new System.Drawing.Size(110, 34);
             this.btnAddGrid_Item.TabIndex = 8;
@@ -153,24 +156,52 @@
             this.btnAddGrid_Item.UseVisualStyleBackColor = false;
             this.btnAddGrid_Item.Click += new System.EventHandler(this.btnAddGrid_Item_Click);
             // 
-            // ctrFrmSearch1
+            // label2
             // 
-            this.ctrFrmSearch1.Location = new System.Drawing.Point(47, 12);
-            this.ctrFrmSearch1.Name = "ctrFrmSearch1";
-            this.ctrFrmSearch1.Size = new System.Drawing.Size(986, 195);
-            this.ctrFrmSearch1.TabIndex = 1;
+            this.label2.Location = new System.Drawing.Point(446, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(184, 23);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "商品コードから1件追加";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(25, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(184, 23);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "商品分類をまとめて追加";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ctrFrmSearchClass1
+            // 
+            this.ctrFrmSearchClass1.Location = new System.Drawing.Point(12, 22);
+            this.ctrFrmSearchClass1.Name = "ctrFrmSearchClass1";
+            this.ctrFrmSearchClass1.Size = new System.Drawing.Size(421, 157);
+            this.ctrFrmSearchClass1.TabIndex = 15;
+            // 
+            // ctrFrmSearchItem1
+            // 
+            this.ctrFrmSearchItem1.Location = new System.Drawing.Point(449, 24);
+            this.ctrFrmSearchItem1.Name = "ctrFrmSearchItem1";
+            this.ctrFrmSearchItem1.Size = new System.Drawing.Size(507, 151);
+            this.ctrFrmSearchItem1.TabIndex = 16;
             // 
             // frmStockControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1203, 561);
+            this.ClientSize = new System.Drawing.Size(1100, 561);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnAddGrid_Class);
             this.Controls.Add(this.btnAddGrid_Item);
-            this.Controls.Add(this.ctrFrmSearch1);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnInsert);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.ctrFrmSearchClass1);
+            this.Controls.Add(this.ctrFrmSearchItem1);
             this.Name = "frmStockControl";
             this.Text = "入出庫管理";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -190,6 +221,9 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnAddGrid_Class;
         private System.Windows.Forms.Button btnAddGrid_Item;
-        private CtrFrmSearch ctrFrmSearch1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private CtrFrmSearchClass ctrFrmSearchClass1;
+        private CtrFrmSearchItem ctrFrmSearchItem1;
     }
 }

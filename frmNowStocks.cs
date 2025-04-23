@@ -38,6 +38,10 @@ namespace StockControlSystem
             //カレンダー
             dtpStart.Enabled = false;
             dtpEnd.Enabled = false;
+
+            ////コントロール
+            //CtrFrmSearchClass ctrFrmClass = new CtrFrmSearchClass();
+            //ctrFrmClass.btnSearchClass.Enabled = false;
         }
         #endregion
 
@@ -46,7 +50,7 @@ namespace StockControlSystem
         private void checkBoxIO_CheckedChanged(object sender, EventArgs e)
         {
             //背景色
-            pnlIO.BackColor = checkBoxItem.Checked ? Color.Honeydew : Color.Gainsboro;
+            pnlIO.BackColor = checkBoxIO.Checked ? Color.Honeydew : Color.Gainsboro;
 
             //ボタン有効化
             if (checkBoxIO.Checked)
@@ -65,7 +69,7 @@ namespace StockControlSystem
         private void checkBoxItem_CheckedChanged(object sender, EventArgs e)
         {
             //背景色
-            pnlDate.BackColor = checkBoxItem.Checked ? Color.Honeydew : Color.Gainsboro;
+            pnlItem.BackColor = checkBoxItem.Checked ? Color.Honeydew : Color.Gainsboro;
 
         }
 
@@ -86,6 +90,19 @@ namespace StockControlSystem
                 dtpStart.Enabled = false;
                 dtpEnd.Enabled = false;
             }
+        }
+
+        //ラジオボタン（分類）
+        private void radioBtnClass_CheckedChanged(object sender, EventArgs e)
+        {
+            //コントロールの有効化
+
+        }
+
+        //ラジオボタン（商品）
+        private void radioBtnItem_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
         #endregion
 
@@ -150,7 +167,7 @@ namespace StockControlSystem
             sb.AppendLine("	FROM ID_IO_HISTORY H");
             sb.AppendLine("	INNER JOIN IM_ITEM I ON H.ItemCD = I.ItemCD");
             sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD");
-            sb.AppendLine("WHERE 1=1");
+            sb.AppendLine(" WHERE 1=1");
 
             //①入出庫条件（ラジオボタン）
             if (checkBoxIO.Checked && radioBtnIn.Checked)
@@ -222,15 +239,5 @@ namespace StockControlSystem
             return true;
         }
         #endregion
-
-        #region■デバッグ用（入出庫管理画面ボタン）
-        private void btnDebug_Click(object sender, EventArgs e)
-        {
-            frmStockControl frmStockControl = new frmStockControl(1000);
-            frmStockControl.ShowDialog();
-        }
-
-        #endregion
-
     }
 }

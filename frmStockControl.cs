@@ -95,7 +95,7 @@ namespace StockControlSystem
         private void btnAddGrid_Class_Click(object sender, EventArgs e)
         {
             //入力チェック（空白）
-            if (ctrFrmSearch1.txtClassName.Text == "")
+            if (ctrFrmSearchClass1.txtClassName.Text == "")
             {
                 return;
             }
@@ -105,8 +105,7 @@ namespace StockControlSystem
 
             //パラメーター追加
             List<SqlParameter> parameters = new List<SqlParameter>();
-
-            parameters.Add(new SqlParameter("ItemClassCD", ctrFrmSearch1.txtClassCD.Text));
+            parameters.Add(new SqlParameter("ItemClassCD", ctrFrmSearchClass1.txtClassCD.Text));
             
             //実行
             DataTable dt = new DataTable();
@@ -120,7 +119,7 @@ namespace StockControlSystem
         private void btnAddGrid_Item_Click(object sender, EventArgs e)
         {
             //入力チェック（空白）
-            if (ctrFrmSearch1.txtItemName.Text == "")
+            if (ctrFrmSearchItem1.txtItemName.Text == "")
             {
                 return;
             }
@@ -130,7 +129,7 @@ namespace StockControlSystem
 
             //パラメーター追加
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("ItemCD", ctrFrmSearch1.txtItemCD.Text));
+            parameters.Add(new SqlParameter("ItemCD", ctrFrmSearchItem1.txtItemCD.Text));
 
             //実行
             DataTable dt = new DataTable();

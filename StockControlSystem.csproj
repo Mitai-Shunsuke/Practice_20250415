@@ -47,11 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CtrFrmSearch.cs">
+    <Compile Include="CtrFrmSearchClass.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtrFrmSearch.Designer.cs">
-      <DependentUpon>CtrFrmSearch.cs</DependentUpon>
+    <Compile Include="CtrFrmSearchClass.Designer.cs">
+      <DependentUpon>CtrFrmSearchClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtrFrmSearchItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtrFrmSearchItem.Designer.cs">
+      <DependentUpon>CtrFrmSearchItem.cs</DependentUpon>
     </Compile>
     <Compile Include="frmDateTimePicker.cs">
       <SubType>Form</SubType>
@@ -93,8 +99,11 @@
     <Compile Include="pgSelectSQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CtrFrmSearch.resx">
-      <DependentUpon>CtrFrmSearch.cs</DependentUpon>
+    <EmbeddedResource Include="CtrFrmSearchClass.resx">
+      <DependentUpon>CtrFrmSearchClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtrFrmSearchItem.resx">
+      <DependentUpon>CtrFrmSearchItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDateTimePicker.resx">
       <DependentUpon>frmDateTimePicker.cs</DependentUpon>

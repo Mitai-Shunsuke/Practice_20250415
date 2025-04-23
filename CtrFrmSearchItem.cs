@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace StockControlSystem
 {
-    public partial class CtrFrmSearch : UserControl
+    public partial class CtrFrmSearchItem : UserControl
     {
         #region■プロパティ
         //コンストラクタ
@@ -22,45 +22,13 @@ namespace StockControlSystem
         #endregion
 
         #region■ロード
-        public CtrFrmSearch()
+        public CtrFrmSearchItem()
         {
             InitializeComponent();
         }
-
         #endregion
 
         #region■イベント
-        //分類CD入力
-        private void txtClassCD_Validated(object sender, EventArgs e)
-        {
-            //入力チェック
-            if (!checkInput("Class"))
-            {
-                return;
-            }
-
-            //SQL作成
-            String query = CreateSQL_Select(true);
-
-            //パラメーター追加
-            List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("ItemClassCD", txtClassCD.Text));
-
-            //実行
-            DataTable dt = new DataTable();
-            dt = bat.SelectSQL(query, parameters);
-
-            //表示
-            if (dt.Rows.Count > 0)
-            {
-                txtClassName.Text = dt.Rows[0]["ItemClassName"].ToString();
-            }
-            else
-            {
-                MessageBox.Show($"分類CD：「{txtClassCD.Text}」は、存在しません。");
-            }
-        }
-
         //商品CD入力
         private void txtItemCD_Validated(object sender, EventArgs e)
         {
@@ -95,22 +63,6 @@ namespace StockControlSystem
         #endregion
 
         #region■ボタン
-        //検索ボタン（分類）
-        private void btnSearchClass_Click(object sender, EventArgs e)
-        {
-            frmSearch frmSearch = new frmSearch("Class");
-            frmSearch.ShowDialog();
-
-            //検索値を適応
-            if (frmSearch.flg == true)
-            {
-                txtClassCD.Text = frmSearch.valueCD;
-                txtClassName.Text = frmSearch.valueName;
-            }
-
-            frmSearch.Dispose();
-        }
-
         //検索ボタン（商品）
         private void btnSearchItem_Click(object sender, EventArgs e)
         {
@@ -140,18 +92,10 @@ namespace StockControlSystem
             sb.AppendLine(",I.ItemName");
             sb.AppendLine("FROM IM_ITEM I");
             sb.AppendLine("INNER JOIN IM_ITEM_CLASS C ON I.ItemClassCD = C.ItemClassCD ");
-
-            //true = 分類。False = 商品。
-            if (IsClass)
-            {
-                sb.AppendLine("WHERE I.ItemClassCD = @ItemClassCD ");
-            }
-            else
-            {
-                sb.AppendLine("WHERE ItemCD = @ItemCD");
-            }
+            sb.AppendLine("WHERE ItemCD = @ItemCD");
 
             return sb.ToString();
+
         }
         #endregion
 
@@ -159,34 +103,19 @@ namespace StockControlSystem
         //分類CD、商品CD
         private bool checkInput(string btnCategory)
         {
-            string text;
-            string Error;
-            if (btnCategory == "Class")
-            {
-                text = txtClassCD.Text;
-                Error = "分類CD";
-            }
-            else
-            {
-                text = txtItemCD.Text;
-                Error = "商品CD";
-            }
-
             //空白チェック
-            if (text == "")
-            {
-                return false;
-            }
+            if (txtItemCD.Text == "")return false;
 
             //数字チェック
-            if (!int.TryParse(text, out int i))
+            if (!int.TryParse(txtItemCD.Text, out int i))
             {
-                MessageBox.Show($"{Error}は数字で入力してください。");
+                MessageBox.Show("商品CDは数字で入力してください。");
                 return false;
             }
 
             return true;
         }
         #endregion
+
     }
 }
