@@ -50,7 +50,8 @@ namespace StockControlSystem
         //入出庫履歴
         private void btnHistory_Click(object sender, EventArgs e)
         {
-            
+            frmHistory frmHistory = new frmHistory();
+            frmHistory.ShowDialog();
         }
 
         //終了ボタン

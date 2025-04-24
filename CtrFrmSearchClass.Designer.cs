@@ -62,7 +62,7 @@
             this.txtClassName.Location = new System.Drawing.Point(133, 51);
             this.txtClassName.Name = "txtClassName";
             this.txtClassName.Size = new System.Drawing.Size(256, 22);
-            this.txtClassName.TabIndex = 2;
+            this.txtClassName.TabIndex = 1;
             // 
             // label4
             // 
@@ -90,7 +90,7 @@
             this.txtClassCD.Location = new System.Drawing.Point(13, 51);
             this.txtClassCD.Name = "txtClassCD";
             this.txtClassCD.Size = new System.Drawing.Size(100, 22);
-            this.txtClassCD.TabIndex = 1;
+            this.txtClassCD.TabIndex = 0;
             this.txtClassCD.Validated += new System.EventHandler(this.txtClassCD_Validated);
             // 
             // btnSearchClass
@@ -99,7 +99,7 @@
             this.btnSearchClass.Location = new System.Drawing.Point(302, 107);
             this.btnSearchClass.Name = "btnSearchClass";
             this.btnSearchClass.Size = new System.Drawing.Size(110, 34);
-            this.btnSearchClass.TabIndex = 3;
+            this.btnSearchClass.TabIndex = 2;
             this.btnSearchClass.Text = "分類検索";
             this.btnSearchClass.UseVisualStyleBackColor = false;
             this.btnSearchClass.Click += new System.EventHandler(this.btnSearchClass_Click);

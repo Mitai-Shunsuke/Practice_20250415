@@ -37,10 +37,10 @@
             this.radioBtnOut = new System.Windows.Forms.RadioButton();
             this.pnlIO = new System.Windows.Forms.Panel();
             this.pnlItem = new System.Windows.Forms.Panel();
+            this.ctrFrmSearchClass1 = new StockControlSystem.CtrFrmSearchClass();
             this.radioBtnItem = new System.Windows.Forms.RadioButton();
             this.radioBtnClass = new System.Windows.Forms.RadioButton();
             this.ctrFrmSearchItem1 = new StockControlSystem.CtrFrmSearchItem();
-            this.ctrFrmSearch1 = new StockControlSystem.CtrFrmSearchClass();
             this.pnlDate = new System.Windows.Forms.Panel();
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -141,14 +141,21 @@
             // pnlItem
             // 
             this.pnlItem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlItem.Controls.Add(this.ctrFrmSearchClass1);
             this.pnlItem.Controls.Add(this.radioBtnItem);
             this.pnlItem.Controls.Add(this.radioBtnClass);
             this.pnlItem.Controls.Add(this.ctrFrmSearchItem1);
-            this.pnlItem.Controls.Add(this.ctrFrmSearch1);
             this.pnlItem.Location = new System.Drawing.Point(280, 21);
             this.pnlItem.Name = "pnlItem";
             this.pnlItem.Size = new System.Drawing.Size(675, 357);
             this.pnlItem.TabIndex = 9;
+            // 
+            // ctrFrmSearchClass1
+            // 
+            this.ctrFrmSearchClass1.Location = new System.Drawing.Point(117, 21);
+            this.ctrFrmSearchClass1.Name = "ctrFrmSearchClass1";
+            this.ctrFrmSearchClass1.Size = new System.Drawing.Size(421, 157);
+            this.ctrFrmSearchClass1.TabIndex = 14;
             // 
             // radioBtnItem
             // 
@@ -180,13 +187,6 @@
             this.ctrFrmSearchItem1.Name = "ctrFrmSearchItem1";
             this.ctrFrmSearchItem1.Size = new System.Drawing.Size(507, 151);
             this.ctrFrmSearchItem1.TabIndex = 11;
-            // 
-            // ctrFrmSearch1
-            // 
-            this.ctrFrmSearch1.Location = new System.Drawing.Point(116, 17);
-            this.ctrFrmSearch1.Name = "ctrFrmSearch1";
-            this.ctrFrmSearch1.Size = new System.Drawing.Size(422, 156);
-            this.ctrFrmSearch1.TabIndex = 10;
             // 
             // pnlDate
             // 
@@ -263,9 +263,9 @@
         private System.Windows.Forms.DateTimePicker dtpEnd;
         private System.Windows.Forms.DateTimePicker dtpStart;
         private System.Windows.Forms.Label label1;
-        private CtrFrmSearchClass ctrFrmSearch1;
-        private CtrFrmSearchItem ctrFrmSearchItem1;
         private System.Windows.Forms.RadioButton radioBtnItem;
         private System.Windows.Forms.RadioButton radioBtnClass;
+        private CtrFrmSearchItem ctrFrmSearchItem1;
+        private CtrFrmSearchClass ctrFrmSearchClass1;
     }
 }

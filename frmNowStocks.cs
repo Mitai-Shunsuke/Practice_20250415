@@ -30,6 +30,11 @@ namespace StockControlSystem
             radioBtnIn.Enabled = false;
             radioBtnOut.Enabled = false;
 
+            radioBtnClass.Checked = true;
+            radioBtnClass.Enabled = false;
+            radioBtnItem.Enabled = false;
+
+
             //背景色
             pnlIO.BackColor = Color.Gainsboro;
             pnlItem.BackColor = Color.Gainsboro;
@@ -71,6 +76,16 @@ namespace StockControlSystem
             //背景色
             pnlItem.BackColor = checkBoxItem.Checked ? Color.Honeydew : Color.Gainsboro;
 
+            if(checkBoxItem.Checked)
+            {
+                radioBtnClass.Enabled = true;
+                radioBtnItem.Enabled = true;
+            }
+            else
+            {
+                radioBtnClass.Enabled = false;
+                radioBtnItem.Enabled = false;
+            }
         }
 
         //チェックボタン（登録期間）
@@ -165,8 +180,18 @@ namespace StockControlSystem
             sb.AppendLine("	,SUM(CASE WHEN H.IsReceived = 'True' AND H.Remarks NOT LIKE N'初期在庫' THEN H.Moving ELSE 0 END) AS '入庫数'");
             sb.AppendLine("	,SUM(CASE WHEN H.IsReceived = 'False' AND H.Remarks NOT LIKE N'初期在庫' THEN H.Moving ELSE 0 END) AS '出庫数'");
             sb.AppendLine("	FROM ID_IO_HISTORY H");
-            sb.AppendLine("	INNER JOIN IM_ITEM I ON H.ItemCD = I.ItemCD");
-            sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD");
+            sb.AppendLine("	INNER JOIN IM_ITEM I ON H.ItemCD = I.ItemCD");            
+
+            //②分類CD条件
+            if (checkBoxItem.Checked && radioBtnClass.Checked)
+            {
+                sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD AND I.ItemClassCD = @ClassCD");
+            }
+            else
+            {
+                sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD");
+            }
+            
             sb.AppendLine(" WHERE 1=1");
 
             //①入出庫条件（ラジオボタン）
@@ -179,6 +204,12 @@ namespace StockControlSystem
             {
                 sb.AppendLine("AND H.Remarks NOT LIKE N'初期在庫'");
                 sb.AppendLine("	AND H.IsReceived = 'False' ");
+            }
+
+            //②商品CD条件
+            if(checkBoxItem.Checked && radioBtnItem.Checked)
+            {
+                sb.AppendLine("AND H.ItemCD LIKE @ItemCD");
             }
             
             //③日付期間条件
@@ -206,9 +237,18 @@ namespace StockControlSystem
         private List<SqlParameter> AddParameter()
         {
             List<SqlParameter> parameters = new List<SqlParameter>();
+            //②分類または商品条件
+            if(checkBoxItem.Checked)
+            {
+                string ClassCD = ctrFrmSearchClass1.txtClassCD.Text;
+                string ItemCD = ctrFrmSearchItem1.txtItemCD.Text;
+                                
+                parameters.Add(new SqlParameter("@ClassCD", ClassCD));
+                parameters.Add(new SqlParameter("@ItemCD", "%" + ItemCD + "%"));
+            }
 
-            //③日付
-            if(checkBoxDate.Checked)
+            //③日付条件
+            if (checkBoxDate.Checked)
             {
                 parameters.Add(new SqlParameter("@startDate", dtpStart.Value.ToString("yyyy/MM/dd")));
                 parameters.Add(new SqlParameter("@endDate", dtpEnd.Value.ToString("yyyy/MM/dd")));
