@@ -55,7 +55,13 @@ namespace StockControlSystem
         private string CreateSQL()
         {
             StringBuilder sb = new StringBuilder();
-
+            sb.AppendLine("SELECT");
+            sb.AppendLine(" H.IODate AS '日付'");
+            sb.AppendLine(",(CASE WHEN H.IsReceived = 'True' THEN H.Moving ELSE 0 END) AS '入庫'");
+            sb.AppendLine(",(CASE WHEN H.IsReceived = 'False' THEN H.Moving ELSE 0 END) AS '出庫'");
+            sb.AppendLine(",H.Remarks AS '備考'");
+            sb.AppendLine("FROM ID_IO_HISTORY H");
+            sb.AppendLine("WHERE H.ItemCD = @ItemCD");
 
             return sb.ToString();
         }

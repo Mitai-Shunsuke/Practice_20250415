@@ -25,6 +25,21 @@ namespace StockControlSystem
         {
             InitializeComponent();
 
+            //初期画面表示
+            LoadDisplay();            
+        }
+
+        private void LoadDisplay()
+        {
+            //コントロール
+            radioBtnClass.Checked = true;
+            ShowSearchClass();
+
+            //背景色
+            pnlIO.BackColor = Color.Gainsboro;
+            pnlItem.BackColor = Color.Gainsboro;
+            pnlDate.BackColor = Color.Gainsboro;
+
             //ラジオボタン
             radioBtnIn.Checked = true;
             radioBtnIn.Enabled = false;
@@ -34,19 +49,15 @@ namespace StockControlSystem
             radioBtnClass.Enabled = false;
             radioBtnItem.Enabled = false;
 
-
-            //背景色
-            pnlIO.BackColor = Color.Gainsboro;
-            pnlItem.BackColor = Color.Gainsboro;
-            pnlDate.BackColor = Color.Gainsboro;
-
             //カレンダー
             dtpStart.Enabled = false;
             dtpEnd.Enabled = false;
 
-            ////コントロール
-            //CtrFrmSearchClass ctrFrmClass = new CtrFrmSearchClass();
-            //ctrFrmClass.btnSearchClass.Enabled = false;
+            //チェックボックス
+            chkBoxDateStart.Checked = true;
+            chkBoxDateEnd.Checked = true;
+            chkBoxDateStart.Enabled = false;
+            chkBoxDateEnd.Enabled = false;
         }
         #endregion
 
@@ -99,25 +110,44 @@ namespace StockControlSystem
             {
                 dtpStart.Enabled = true;
                 dtpEnd.Enabled = true;
+                chkBoxDateStart.Enabled = true;
+                chkBoxDateEnd.Enabled = true;
             }
             else
             {
                 dtpStart.Enabled = false;
                 dtpEnd.Enabled = false;
+                chkBoxDateStart.Enabled = false;
+                chkBoxDateEnd.Enabled = false;
             }
         }
 
         //ラジオボタン（分類）
         private void radioBtnClass_CheckedChanged(object sender, EventArgs e)
         {
-            //コントロールの有効化
-
+            //分類コントロール表示
+            if (radioBtnClass.Checked) ShowSearchClass();
         }
 
         //ラジオボタン（商品）
         private void radioBtnItem_CheckedChanged(object sender, EventArgs e)
         {
+            //商品コントロール表示
+            if (radioBtnItem.Checked) ShowSearchItem();
+        }
 
+        //チェックボックス（カレンダー開始）
+        private void chkBoxDateStart_CheckedChanged(object sender, EventArgs e)
+        {
+            //開始カレンダー有効化
+            dtpStart.Enabled = chkBoxDateStart.Checked ? true : false;
+        }
+
+        //チェックボックス（カレンダー終了）
+        private void chkBoxDateEnd_CheckedChanged(object sender, EventArgs e)
+        {
+            //終了カレンダー有効化
+            dtpEnd.Enabled = chkBoxDateEnd.Checked ? true : false;
         }
         #endregion
 
@@ -215,8 +245,15 @@ namespace StockControlSystem
             //③日付期間条件
             if(checkBoxDate.Checked)
             {
-                sb.AppendLine("	AND @startDate<= H.IODate");
-                sb.AppendLine("	AND H.IODate <= @endDate");
+                if (chkBoxDateStart.Checked)
+                {
+                    sb.AppendLine("	AND @startDate<= H.IODate");
+                }
+
+                if(chkBoxDateEnd.Checked)
+                {
+                    sb.AppendLine("	AND H.IODate <= @endDate");
+                }              
             }
 
             sb.AppendLine("	GROUP BY  IC.ItemClassCD");
@@ -236,13 +273,25 @@ namespace StockControlSystem
         #region■パラメータ追加
         private List<SqlParameter> AddParameter()
         {
+            string ClassCD = string.Empty;
+            string ItemCD = string.Empty;
+
+            if (pnlControl.Controls[0] is CtrFrmSearchClass searchCtrl)
+            {
+                ClassCD = searchCtrl.ClassCD;
+            }
+
+            if (pnlControl.Controls[0] is CtrFrmSearchItem itemCtrl)
+            {
+                ItemCD = itemCtrl.ItemCD;
+            }
+
             List<SqlParameter> parameters = new List<SqlParameter>();
+
+
             //②分類または商品条件
             if(checkBoxItem.Checked)
             {
-                string ClassCD = ctrFrmSearchClass1.txtClassCD.Text;
-                string ItemCD = ctrFrmSearchItem1.txtItemCD.Text;
-                                
                 parameters.Add(new SqlParameter("@ClassCD", ClassCD));
                 parameters.Add(new SqlParameter("@ItemCD", "%" + ItemCD + "%"));
             }
@@ -278,6 +327,25 @@ namespace StockControlSystem
             
             return true;
         }
+        #endregion
+
+        #region■コントロール表示
+        private void ShowSearchClass()
+        {
+            pnlControl.Controls.Clear();
+            CtrFrmSearchClass CtrFrm1 = new CtrFrmSearchClass();
+            CtrFrm1.Dock = DockStyle.Fill;
+            pnlControl.Controls.Add(CtrFrm1);
+        }
+
+        private void ShowSearchItem()
+        {
+            pnlControl.Controls.Clear();
+            CtrFrmSearchItem CtrFrm2 = new CtrFrmSearchItem();
+            CtrFrm2.Dock = DockStyle.Fill;
+            pnlControl.Controls.Add(CtrFrm2);
+        }
+
         #endregion
     }
 }

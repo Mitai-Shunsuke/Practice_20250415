@@ -19,6 +19,8 @@ namespace StockControlSystem
 
         pgExecuteSQL bat1 = new pgExecuteSQL();
 
+        public string ClassCD;
+
         #endregion
 
         #region■ロード
@@ -34,10 +36,12 @@ namespace StockControlSystem
         private void txtClassCD_Validated(object sender, EventArgs e)
         {
             //入力チェック
-            if (!checkInput("Class"))
+            if (!checkInput())
             {
                 return;
             }
+
+            ClassCD = txtClassCD.Text;
 
             //SQL作成
             String query = CreateSQL_Select(true);
@@ -99,8 +103,8 @@ namespace StockControlSystem
         #endregion
 
         #region■入力チェック
-        //分類CD、商品CD
-        private bool checkInput(string btnCategory)
+        //分類CD
+        private bool checkInput()
         {
             //空白チェック
             if(txtClassCD.Text == "")return false;
