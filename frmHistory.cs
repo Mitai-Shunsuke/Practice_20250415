@@ -56,12 +56,25 @@ namespace StockControlSystem
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("SELECT");
-            sb.AppendLine(" H.IODate AS '日付'");
-            sb.AppendLine(",(CASE WHEN H.IsReceived = 'True' THEN H.Moving ELSE 0 END) AS '入庫'");
-            sb.AppendLine(",(CASE WHEN H.IsReceived = 'False' THEN H.Moving ELSE 0 END) AS '出庫'");
-            sb.AppendLine(",H.Remarks AS '備考'");
-            sb.AppendLine("FROM ID_IO_HISTORY H");
-            sb.AppendLine("WHERE H.ItemCD = @ItemCD");
+            sb.AppendLine(" IODate AS '日付'");
+            sb.AppendLine(",CASE WHEN IsReceived = 'True' THEN Moving ELSE 0 END AS '入庫'");
+            sb.AppendLine(",CASE WHEN IsReceived = 'False' THEN Moving ELSE 0 END AS '出庫'");
+            sb.AppendLine(",SUM(入庫数 - 出庫数) OVER (PARTITION BY ItemCD ORDER BY IODate, HistoryCD) AS 'この時点の在庫数'");
+            sb.AppendLine(",Remarks AS '備考'");
+            sb.AppendLine("FROM (");
+            sb.AppendLine("	SELECT ");
+            sb.AppendLine("	 IODate");
+            sb.AppendLine("	,ItemCD");
+            sb.AppendLine("	,IsReceived");
+            sb.AppendLine("	,Moving");
+            sb.AppendLine("	,Remarks");
+            sb.AppendLine("	,HistoryCD");
+            sb.AppendLine("	,CASE WHEN IsReceived = 'True' THEN Moving ELSE 0 END AS 入庫数");
+            sb.AppendLine("	,CASE WHEN IsReceived = 'False' THEN Moving ELSE 0 END AS 出庫数");
+            sb.AppendLine("	FROM ID_IO_HISTORY");
+            sb.AppendLine("	WHERE ItemCD = @ItemCD");
+            sb.AppendLine(") X");
+            sb.AppendLine("ORDER BY IODate, HistoryCD");
 
             return sb.ToString();
         }

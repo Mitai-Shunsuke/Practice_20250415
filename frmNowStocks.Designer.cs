@@ -41,13 +41,13 @@
             this.radioBtnItem = new System.Windows.Forms.RadioButton();
             this.radioBtnClass = new System.Windows.Forms.RadioButton();
             this.pnlDate = new System.Windows.Forms.Panel();
+            this.chkBoxDateEnd = new System.Windows.Forms.CheckBox();
+            this.chkBoxDateStart = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
-            this.chkBoxDateStart = new System.Windows.Forms.CheckBox();
-            this.chkBoxDateEnd = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.pnlIO.SuspendLayout();
             this.pnlItem.SuspendLayout();
@@ -68,6 +68,7 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(19, 401);
             this.dataGridView1.Name = "dataGridView1";
@@ -197,6 +198,26 @@
             this.pnlDate.Size = new System.Drawing.Size(631, 64);
             this.pnlDate.TabIndex = 9;
             // 
+            // chkBoxDateEnd
+            // 
+            this.chkBoxDateEnd.AutoSize = true;
+            this.chkBoxDateEnd.Location = new System.Drawing.Point(305, 23);
+            this.chkBoxDateEnd.Name = "chkBoxDateEnd";
+            this.chkBoxDateEnd.Size = new System.Drawing.Size(18, 17);
+            this.chkBoxDateEnd.TabIndex = 5;
+            this.chkBoxDateEnd.UseVisualStyleBackColor = true;
+            this.chkBoxDateEnd.CheckedChanged += new System.EventHandler(this.chkBoxDateEnd_CheckedChanged);
+            // 
+            // chkBoxDateStart
+            // 
+            this.chkBoxDateStart.AutoSize = true;
+            this.chkBoxDateStart.Location = new System.Drawing.Point(21, 24);
+            this.chkBoxDateStart.Name = "chkBoxDateStart";
+            this.chkBoxDateStart.Size = new System.Drawing.Size(18, 17);
+            this.chkBoxDateStart.TabIndex = 4;
+            this.chkBoxDateStart.UseVisualStyleBackColor = true;
+            this.chkBoxDateStart.CheckedChanged += new System.EventHandler(this.chkBoxDateStart_CheckedChanged);
+            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -237,26 +258,6 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "検索結果";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // chkBoxDateStart
-            // 
-            this.chkBoxDateStart.AutoSize = true;
-            this.chkBoxDateStart.Location = new System.Drawing.Point(21, 24);
-            this.chkBoxDateStart.Name = "chkBoxDateStart";
-            this.chkBoxDateStart.Size = new System.Drawing.Size(18, 17);
-            this.chkBoxDateStart.TabIndex = 4;
-            this.chkBoxDateStart.UseVisualStyleBackColor = true;
-            this.chkBoxDateStart.CheckedChanged += new System.EventHandler(this.chkBoxDateStart_CheckedChanged);
-            // 
-            // chkBoxDateEnd
-            // 
-            this.chkBoxDateEnd.AutoSize = true;
-            this.chkBoxDateEnd.Location = new System.Drawing.Point(305, 23);
-            this.chkBoxDateEnd.Name = "chkBoxDateEnd";
-            this.chkBoxDateEnd.Size = new System.Drawing.Size(18, 17);
-            this.chkBoxDateEnd.TabIndex = 5;
-            this.chkBoxDateEnd.UseVisualStyleBackColor = true;
-            this.chkBoxDateEnd.CheckedChanged += new System.EventHandler(this.chkBoxDateEnd_CheckedChanged);
             // 
             // frmNowStocks
             // 

@@ -73,47 +73,41 @@
             this.Remarks.HeaderText = "備考欄";
             this.Remarks.MinimumWidth = 6;
             this.Remarks.Name = "Remarks";
-            this.Remarks.Width = 81;
             // 
             // Moving
             // 
             this.Moving.HeaderText = "移動数";
             this.Moving.MinimumWidth = 6;
             this.Moving.Name = "Moving";
-            this.Moving.Width = 81;
             // 
             // Date
             // 
             this.Date.HeaderText = "入出庫日";
             this.Date.MinimumWidth = 6;
             this.Date.Name = "Date";
-            this.Date.Width = 96;
             // 
             // ItemName
             // 
             this.ItemName.HeaderText = "商品名";
             this.ItemName.MinimumWidth = 6;
             this.ItemName.Name = "ItemName";
-            this.ItemName.Width = 81;
             // 
             // ItemCD
             // 
             this.ItemCD.HeaderText = "商品CD";
             this.ItemCD.MinimumWidth = 6;
             this.ItemCD.Name = "ItemCD";
-            this.ItemCD.Width = 86;
             // 
             // ItemClassName
             // 
             this.ItemClassName.HeaderText = "商品分類";
             this.ItemClassName.MinimumWidth = 6;
             this.ItemClassName.Name = "ItemClassName";
-            this.ItemClassName.Width = 96;
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
