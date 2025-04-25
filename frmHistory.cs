@@ -47,6 +47,28 @@ namespace StockControlSystem
 
         #endregion
 
+        #region■イベント
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
+
+            //起動中のForm名取得
+            List<string> openForms = new List<string>();
+            openForms = GetOpenFromName();
+            if (openForms.Contains("frmStockControl"))
+            {
+                MessageBox.Show("入出庫管理画面はすでに開いています。複数同時に開くことはできません。");
+                return;
+            }
+
+            string ItemCD = ctrFrmSearchItem1.txtItemCD.Text;
+
+            frmStockControl frmStockControl = new frmStockControl(ItemCD);
+            frmStockControl.ShowDialog();
+            frmStockControl.Dispose();
+        }
+        #endregion
+
         #region■ボタン
         //現在庫管理画面へボタン
         private void btnChangeForm_Click(object sender, EventArgs e)
@@ -161,23 +183,5 @@ namespace StockControlSystem
         }
 
         #endregion
-
-        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //起動中のForm名取得
-            List<string> openForms = new List<string>();
-            openForms = GetOpenFromName();
-            if (openForms.Contains("frmStockControl"))
-            {
-                MessageBox.Show("入出庫管理画面はすでに開いています。複数同時に開くことはできません。");
-                return;
-            }
-
-            string ItemCD = ctrFrmSearchItem1.txtItemCD.Text;
-
-            frmStockControl frmStockControl = new frmStockControl(ItemCD);
-            frmStockControl.ShowDialog();
-            frmStockControl.Dispose();
-        }
     }
 }
