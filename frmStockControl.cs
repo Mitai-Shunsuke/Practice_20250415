@@ -75,6 +75,8 @@ namespace StockControlSystem
 
                     string Date = frmDateTimePicker.Date.ToString("yyyy/MM/dd");
                     dataGridView1.CurrentCell.Value = Date;
+
+                    frmDateTimePicker.Dispose();
                 }
                 else
                 {
@@ -85,6 +87,8 @@ namespace StockControlSystem
 
                     string Date = frmDateTimePicker.Date.ToString("yyyy/MM/dd");
                     dataGridView1.CurrentCell.Value = Date;
+
+                    frmDateTimePicker.Dispose();
                 }
             }
         }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnSearch = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgv = new System.Windows.Forms.DataGridView();
             this.checkBoxIO = new System.Windows.Forms.CheckBox();
             this.checkBoxItem = new System.Windows.Forms.CheckBox();
             this.checkBoxDate = new System.Windows.Forms.CheckBox();
@@ -48,7 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.pnlIO.SuspendLayout();
             this.pnlItem.SuspendLayout();
             this.pnlDate.SuspendLayout();
@@ -65,17 +65,20 @@
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // dataGridView1
+            // dgv
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(19, 401);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(756, 347);
-            this.dataGridView1.TabIndex = 1;
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Location = new System.Drawing.Point(19, 401);
+            this.dgv.Name = "dgv";
+            this.dgv.ReadOnly = true;
+            this.dgv.RowHeadersWidth = 51;
+            this.dgv.RowTemplate.Height = 24;
+            this.dgv.Size = new System.Drawing.Size(756, 347);
+            this.dgv.TabIndex = 1;
+            this.dgv.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellDoubleClick);
+            this.dgv.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEnter);
             // 
             // checkBoxIO
             // 
@@ -268,14 +271,14 @@
             this.Controls.Add(this.checkBoxDate);
             this.Controls.Add(this.checkBoxItem);
             this.Controls.Add(this.checkBoxIO);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgv);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.pnlItem);
             this.Controls.Add(this.pnlIO);
             this.Controls.Add(this.pnlDate);
             this.Name = "frmNowStocks";
             this.Text = "現在庫管理";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.pnlIO.ResumeLayout(false);
             this.pnlIO.PerformLayout();
             this.pnlItem.ResumeLayout(false);
@@ -290,7 +293,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv;
         private System.Windows.Forms.CheckBox checkBoxIO;
         private System.Windows.Forms.CheckBox checkBoxItem;
         private System.Windows.Forms.CheckBox checkBoxDate;
@@ -311,5 +314,6 @@
         private System.Windows.Forms.CheckBox chkBoxDateStart;
         private System.Windows.Forms.UserControl CtrFrmSearchClass1;
         private System.Windows.Forms.UserControl CtrFrmSearchItem1;
+        private CtrFrmSearchItem ctrFrmSearchItem1;
     }
 }

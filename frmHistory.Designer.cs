@@ -31,17 +31,18 @@
             this.btnHistory = new System.Windows.Forms.Button();
             this.dgv = new System.Windows.Forms.DataGridView();
             this.ctrFrmSearchItem1 = new StockControlSystem.CtrFrmSearchItem();
+            this.btnChangeForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // btnHistory
             // 
-            this.btnHistory.BackColor = System.Drawing.Color.Violet;
-            this.btnHistory.Location = new System.Drawing.Point(564, 117);
+            this.btnHistory.BackColor = System.Drawing.Color.SpringGreen;
+            this.btnHistory.Location = new System.Drawing.Point(525, 118);
             this.btnHistory.Name = "btnHistory";
-            this.btnHistory.Size = new System.Drawing.Size(110, 31);
+            this.btnHistory.Size = new System.Drawing.Size(149, 34);
             this.btnHistory.TabIndex = 2;
-            this.btnHistory.Text = "履歴表示";
+            this.btnHistory.Text = "履歴検索";
             this.btnHistory.UseVisualStyleBackColor = false;
             this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
             // 
@@ -64,11 +65,23 @@
             this.ctrFrmSearchItem1.Size = new System.Drawing.Size(507, 151);
             this.ctrFrmSearchItem1.TabIndex = 1;
             // 
+            // btnChangeForm
+            // 
+            this.btnChangeForm.BackColor = System.Drawing.Color.Aqua;
+            this.btnChangeForm.Location = new System.Drawing.Point(525, 65);
+            this.btnChangeForm.Name = "btnChangeForm";
+            this.btnChangeForm.Size = new System.Drawing.Size(149, 34);
+            this.btnChangeForm.TabIndex = 4;
+            this.btnChangeForm.Text = "現在庫管理画面へ";
+            this.btnChangeForm.UseVisualStyleBackColor = false;
+            this.btnChangeForm.Click += new System.EventHandler(this.btnChangeForm_Click);
+            // 
             // frmHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(711, 464);
+            this.Controls.Add(this.btnChangeForm);
             this.Controls.Add(this.dgv);
             this.Controls.Add(this.btnHistory);
             this.Controls.Add(this.ctrFrmSearchItem1);
@@ -84,5 +97,6 @@
         private CtrFrmSearchItem ctrFrmSearchItem1;
         private System.Windows.Forms.Button btnHistory;
         private System.Windows.Forms.DataGridView dgv;
+        private System.Windows.Forms.Button btnChangeForm;
     }
 }

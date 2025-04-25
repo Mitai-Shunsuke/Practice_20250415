@@ -16,9 +16,6 @@ namespace StockControlSystem
         //DB接続パス
         private string conectDB = ConfigurationManager.AppSettings["connectionDB"];
 
-        //実行件数
-        private int results;
-
         //■1つずつ作成&実行
         public void ExecuteSingleSQL(string query, List<SqlParameter> parameters)
         {

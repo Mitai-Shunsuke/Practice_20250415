@@ -59,7 +59,6 @@ namespace StockControlSystem
 
                 //★モードレス表示
                 frmMainMenu.ShowDialog();
-                //frmMainMenu.Show();
                 this.Close();
             }
             else

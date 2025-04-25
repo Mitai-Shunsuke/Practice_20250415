@@ -18,17 +18,56 @@ namespace StockControlSystem
         //コンストラクタ
         pgSelectSQL bat = new pgSelectSQL();
 
+        //現在庫管理画面を開いているか
+        private bool IsOpenNowStock = false;
+
         #endregion
 
         #region■ロード
+        //メインメニュー画面から遷移
         public frmHistory()
         {
             InitializeComponent();
         }
+
+        //現在庫管理画面から遷移
+        public frmHistory(string dgvItemCD, string dgvItemName)
+        {
+            InitializeComponent();
+
+            IsOpenNowStock = true;
+
+            //商品コントロール設定
+            ctrFrmSearchItem1.txtItemCD.Text = dgvItemCD;
+            ctrFrmSearchItem1.txtItemName.Text = dgvItemName;
+
+            //現在庫管理画面からは検索後の画面で起動
+            btnHistory_Click(null,null);
+        }
+
         #endregion
 
         #region■ボタン
-        //履歴表示ボタン
+        //現在庫管理画面へボタン
+        private void btnChangeForm_Click(object sender, EventArgs e)
+        {
+            if (IsOpenNowStock)
+            {
+                MessageBox.Show("現在庫画面はすでに開いています。複数同時に開くことはできません。");
+                return; 
+            }
+
+            string ItemCD = ctrFrmSearchItem1.txtItemCD.Text;
+            string ItemName = ctrFrmSearchItem1.txtItemName.Text;
+
+            frmNowStocks frmNowStocks = new frmNowStocks(ItemCD, ItemName);
+            frmNowStocks.ShowDialog();
+            frmNowStocks.Dispose();
+
+            IsOpenNowStock = false;
+        }
+
+        //履歴検索ボタン
         private void btnHistory_Click(object sender, EventArgs e)
         {
             //入力チェック
@@ -47,6 +86,9 @@ namespace StockControlSystem
 
             //表示
             dgv.DataSource = dt;
+
+            //入出庫管理画面ボタン有効化
+            btnChangeForm.Enabled = dt.Rows.Count > 0 ? true : false;
 
         }
         #endregion
@@ -79,10 +121,5 @@ namespace StockControlSystem
             return sb.ToString();
         }
         #endregion
-
-        #region■
-
-        #endregion
-
     }
 }
