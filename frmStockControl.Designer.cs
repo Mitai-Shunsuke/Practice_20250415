@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ctrFrmSearchClass1 = new StockControlSystem.CtrFrmSearchClass();
             this.ctrFrmSearchItem1 = new StockControlSystem.CtrFrmSearchItem();
+            this.btnUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,9 +53,10 @@
             this.btnInsert.Location = new System.Drawing.Point(962, 459);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(110, 71);
-            this.btnInsert.TabIndex = 10;
+            this.btnInsert.TabIndex = 6;
             this.btnInsert.Text = "登録";
             this.btnInsert.UseVisualStyleBackColor = false;
+            this.btnInsert.Visible = false;
             this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
             // btnDelete
@@ -63,7 +65,7 @@
             this.btnDelete.Location = new System.Drawing.Point(962, 366);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(110, 71);
-            this.btnDelete.TabIndex = 9;
+            this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "1行削除";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -123,7 +125,7 @@
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(928, 345);
-            this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
@@ -134,7 +136,7 @@
             this.btnAddGrid_Class.Location = new System.Drawing.Point(185, 129);
             this.btnAddGrid_Class.Name = "btnAddGrid_Class";
             this.btnAddGrid_Class.Size = new System.Drawing.Size(110, 34);
-            this.btnAddGrid_Class.TabIndex = 7;
+            this.btnAddGrid_Class.TabIndex = 2;
             this.btnAddGrid_Class.Text = "表に追加";
             this.btnAddGrid_Class.UseVisualStyleBackColor = false;
             this.btnAddGrid_Class.Click += new System.EventHandler(this.btnAddGrid_Class_Click);
@@ -145,7 +147,7 @@
             this.btnAddGrid_Item.Location = new System.Drawing.Point(709, 129);
             this.btnAddGrid_Item.Name = "btnAddGrid_Item";
             this.btnAddGrid_Item.Size = new System.Drawing.Size(110, 34);
-            this.btnAddGrid_Item.TabIndex = 8;
+            this.btnAddGrid_Item.TabIndex = 4;
             this.btnAddGrid_Item.Text = "表に追加";
             this.btnAddGrid_Item.UseVisualStyleBackColor = false;
             this.btnAddGrid_Item.Click += new System.EventHandler(this.btnAddGrid_Item_Click);
@@ -173,20 +175,33 @@
             this.ctrFrmSearchClass1.Location = new System.Drawing.Point(12, 22);
             this.ctrFrmSearchClass1.Name = "ctrFrmSearchClass1";
             this.ctrFrmSearchClass1.Size = new System.Drawing.Size(421, 157);
-            this.ctrFrmSearchClass1.TabIndex = 15;
+            this.ctrFrmSearchClass1.TabIndex = 1;
             // 
             // ctrFrmSearchItem1
             // 
             this.ctrFrmSearchItem1.Location = new System.Drawing.Point(449, 24);
             this.ctrFrmSearchItem1.Name = "ctrFrmSearchItem1";
             this.ctrFrmSearchItem1.Size = new System.Drawing.Size(507, 151);
-            this.ctrFrmSearchItem1.TabIndex = 16;
+            this.ctrFrmSearchItem1.TabIndex = 3;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.BackColor = System.Drawing.Color.MediumSpringGreen;
+            this.btnUpdate.Location = new System.Drawing.Point(962, 459);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(110, 71);
+            this.btnUpdate.TabIndex = 7;
+            this.btnUpdate.Text = "更新";
+            this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Visible = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // frmStockControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 561);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnAddGrid_Class);
@@ -219,5 +234,6 @@
         private System.Windows.Forms.Label label1;
         private CtrFrmSearchClass ctrFrmSearchClass1;
         private CtrFrmSearchItem ctrFrmSearchItem1;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }

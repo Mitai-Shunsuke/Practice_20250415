@@ -72,7 +72,8 @@ namespace StockControlSystem
                     }
 
                     tran.Commit();
-                    MessageBox.Show($"更新件数は、 {total}件です。");
+                    DialogResult result = MessageBox.Show($"更新件数は、 {total}件です。","確認", MessageBoxButtons.OKCancel);
+                    if (result == DialogResult.Cancel) return;
                 }
                 catch (Exception ex)
                 {

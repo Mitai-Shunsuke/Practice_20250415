@@ -30,17 +30,64 @@ namespace StockControlSystem
         //選択中のセル行
         private int cellRow;
 
+        //履歴画面から遷移時のItemCD
+        private string hItemCD;
+
         #endregion
 
+        #region■ロード
         public frmStockControl(int StaffCD)
         {
             InitializeComponent();
 
             StaffCd = StaffCD;
 
+            //登録ボタン表示
+            btnInsert.Visible = true;
+
             //dataGridViewの入力形式
             SettingComboBox();
         }
+
+        public frmStockControl(string itemCD)
+        {
+            InitializeComponent();
+
+            //上半分非表示（テスト）
+            label1.Visible = false;
+            label2.Visible = false;
+            btnAddGrid_Class.Visible = false;
+            btnAddGrid_Item.Visible = false;
+            ctrFrmSearchClass1.Visible = false;
+            ctrFrmSearchItem1.Visible = false;
+
+            //更新ボタン表示
+            btnUpdate.Visible = true;
+
+            hItemCD = itemCD;
+
+            //DataGridViewに表示
+            InitializeFromHistory(itemCD);
+        }
+
+        //履歴画面から遷移時の初期表示
+        private void InitializeFromHistory(string itemCD)
+        {
+            // SQL作成
+            string query = CeateSQL_DeleteHisutory();
+
+            //パラメータ追加
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@ItemCD", itemCD));
+
+            //実行結果
+            DataTable dt = new DataTable();
+            dt = bat.SelectSQL(query, parameters);
+
+            //表示
+            ShowDataGridView(dt);
+        }
+        #endregion
 
         #region■イベント
         //DataGridViewのセル選択変更
@@ -61,6 +108,7 @@ namespace StockControlSystem
         //DataGridViewのダブルクリック
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
             //セル取得
             int cellColumn = e.ColumnIndex;
 
@@ -99,10 +147,7 @@ namespace StockControlSystem
         private void btnAddGrid_Class_Click(object sender, EventArgs e)
         {
             //入力チェック（空白）
-            if (ctrFrmSearchClass1.txtClassName.Text == "")
-            {
-                return;
-            }
+            if (ctrFrmSearchClass1.txtClassName.Text == "") return;
 
             //SQL作成
             string query = CreateSQL_Select(true);
@@ -123,10 +168,7 @@ namespace StockControlSystem
         private void btnAddGrid_Item_Click(object sender, EventArgs e)
         {
             //入力チェック（空白）
-            if (ctrFrmSearchItem1.txtItemName.Text == "")
-            {
-                return;
-            }
+            if (ctrFrmSearchItem1.txtItemName.Text == "") return;
 
             //SQL作成
             string query = CreateSQL_Select(false);
@@ -147,10 +189,7 @@ namespace StockControlSystem
         private void btnInsert_Click(object sender, EventArgs e)
         {
             //データの有無
-            if(dataGridView1.Rows.Count == 0)
-            {
-                return;
-            }
+            if (dataGridView1.Rows.Count == 0) return;
 
             //SQL作成
             string query = CreateSQL_INSERT();
@@ -158,17 +197,33 @@ namespace StockControlSystem
             //パラメータ取得
             List<List<SqlParameter>> allParam = new List<List<SqlParameter>>();
             allParam = AddParameters();
-            if(allParam == null )
-            {
-                return;
-            }
+            if (allParam == null) return;
 
             //実行
             bat1.ExecuteMultipleSQL(query, allParam);
 
             dataGridView1.Rows.Clear();
 
-            MessageBox.Show("データ登録が完了しました。");
+            MessageBox.Show("データ処理が完了しました。");
+        }
+
+
+        //履歴更新ボタン
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            //既存のデータを全削除
+            string query = CreateSQL_Delete();
+
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@ItemCD", hItemCD));
+
+            //実行
+            bat1.ExecuteSingleSQL(query, parameters);
+
+            //登録ボタンと同じ処理
+            btnInsert_Click(null, null);
+
+            this.Close();
         }
 
         //一行削除ボタン
@@ -220,6 +275,37 @@ namespace StockControlSystem
             sb.AppendLine("(IODate,ItemCD,IsReceived,Moving,StaffCD,Remarks)");
             sb.AppendLine("VALUES");
             sb.AppendLine("(@IODate,@ItemCD,@IsReceived,@Moving,@StaffCD,@Remarks)");
+
+            return sb.ToString();
+        }
+
+        //履歴画面からの検索結果
+        private string CeateSQL_DeleteHisutory()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("SELECT ");
+            sb.AppendLine(" C.ItemClassName AS '商品分類'");
+            sb.AppendLine(",H.ItemCD AS '商品CD'");
+            sb.AppendLine(",I.ItemName AS '商品名'");
+            sb.AppendLine(",H.IODate AS '入出庫日'");
+            sb.AppendLine(",(CASE WHEN H.IsReceived = 'True' THEN N'入庫' ELSE N'出庫'END) AS '区別'");
+            sb.AppendLine(",H.Moving AS '移動数'");
+            sb.AppendLine(",H.Remarks AS '備考欄'");
+            sb.AppendLine("FROM ID_IO_HISTORY H");
+            sb.AppendLine("INNER JOIN IM_ITEM I ON H.ItemCD = I.ItemCD");
+            sb.AppendLine("INNER JOIN IM_ITEM_CLASS C ON C.ItemClassCD = I.ItemClassCD");
+            sb.AppendLine("WHERE H.ItemCD = @ItemCD");
+            sb.AppendLine("ORDER BY H.IODate,H.HistoryCD");
+
+            return sb.ToString();
+        }
+
+        //テーブルのデータを削除
+        private string CreateSQL_Delete()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("DELETE FROM ID_IO_HISTORY ");
+            sb.AppendLine("WHERE ItemCD = @ItemCD");
 
             return sb.ToString();
         }
@@ -404,6 +490,37 @@ namespace StockControlSystem
             //列の挿入インデックス
             dataGridView1.Columns.Insert(4, cmbColumn);
         }
+        #endregion
+
+        #region■DataGridViewの表示（履歴画面から）
+        private void ShowDataGridView(DataTable dt)
+        {
+            //「区別」列作成
+            SettingComboBox();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                //新しい行追加
+                int rowIndex = dataGridView1.Rows.Add();
+                
+                //カラムごとに記入
+                dataGridView1.Rows[rowIndex].Cells[0].Value = row["商品分類"].ToString();
+                dataGridView1.Rows[rowIndex].Cells[1].Value = row["商品CD"].ToString();
+                dataGridView1.Rows[rowIndex].Cells[2].Value = row["商品名"].ToString();
+
+                //カレンダー作成
+                if(DateTime.TryParse(row["入出庫日"].ToString(), out DateTime date))
+                dataGridView1.Rows[rowIndex].Cells[3].Value = date.ToString("yyyy/MM/dd");                
+                dataGridView1.Rows[rowIndex].Cells[4].Value = row["区別"].ToString();
+                dataGridView1.Rows[rowIndex].Cells[5].Value = row["移動数"].ToString();
+                dataGridView1.Rows[rowIndex].Cells[6].Value = row["備考欄"].ToString();
+            }
+        }
+        #endregion
+
+        #region■デバッグ用
+        
+
         #endregion
     }
 }

@@ -26,7 +26,10 @@ namespace StockControlSystem
         {
             InitializeComponent();
 
-            btnChangeForm.BackColor = Color.Gray;
+            btnFormNowStock.Enabled = false;
+            btnFormNowStock.BackColor = Color.Gray;
+            btnFormStockControl.Enabled = false;
+            btnFormStockControl.BackColor = Color.Gray;
         }
 
         //現在庫管理画面から遷移
@@ -65,6 +68,25 @@ namespace StockControlSystem
             frmNowStocks.Dispose();
         }
 
+        //入出庫管理画面へボタン
+        private void btnFormStockControl_Click(object sender, EventArgs e)
+        {
+            //起動中のForm名取得
+            List<string> openForms = new List<string>();
+            openForms = GetOpenFromName();
+            if (openForms.Contains("frmStockControl"))
+            {
+                MessageBox.Show("入出庫管理画面はすでに開いています。複数同時に開くことはできません。");
+                return;
+            }
+
+            string ItemCD = ctrFrmSearchItem1.txtItemCD.Text;
+
+            frmStockControl frmStockControl = new frmStockControl(ItemCD);
+            frmStockControl.ShowDialog();
+            frmStockControl.Dispose();
+        }
+
         //履歴検索ボタン
         private void btnHistory_Click(object sender, EventArgs e)
         {
@@ -88,8 +110,10 @@ namespace StockControlSystem
             //入出庫管理画面ボタン有効化
             if(dt.Rows.Count > 0)
             {
-                btnChangeForm.Enabled = true;
-                btnChangeForm.BackColor = Color.Aqua;
+                btnFormNowStock.Enabled = true;
+                btnFormNowStock.BackColor = Color.Salmon;
+                btnFormStockControl.Enabled = true;
+                btnFormStockControl.BackColor = Color.Cyan;
             }
         }
         #endregion
@@ -137,5 +161,23 @@ namespace StockControlSystem
         }
 
         #endregion
+
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //起動中のForm名取得
+            List<string> openForms = new List<string>();
+            openForms = GetOpenFromName();
+            if (openForms.Contains("frmStockControl"))
+            {
+                MessageBox.Show("入出庫管理画面はすでに開いています。複数同時に開くことはできません。");
+                return;
+            }
+
+            string ItemCD = ctrFrmSearchItem1.txtItemCD.Text;
+
+            frmStockControl frmStockControl = new frmStockControl(ItemCD);
+            frmStockControl.ShowDialog();
+            frmStockControl.Dispose();
+        }
     }
 }
