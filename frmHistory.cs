@@ -18,9 +18,6 @@ namespace StockControlSystem
         //コンストラクタ
         pgSelectSQL bat = new pgSelectSQL();
 
-        //現在庫管理画面を開いているか
-        private bool IsOpenNowStock = false;
-
         #endregion
 
         #region■ロード
@@ -28,14 +25,14 @@ namespace StockControlSystem
         public frmHistory()
         {
             InitializeComponent();
+
+            btnChangeForm.BackColor = Color.Gray;
         }
 
         //現在庫管理画面から遷移
         public frmHistory(string dgvItemCD, string dgvItemName)
         {
             InitializeComponent();
-
-            IsOpenNowStock = true;
 
             //商品コントロール設定
             ctrFrmSearchItem1.txtItemCD.Text = dgvItemCD;
@@ -51,10 +48,13 @@ namespace StockControlSystem
         //現在庫管理画面へボタン
         private void btnChangeForm_Click(object sender, EventArgs e)
         {
-            if (IsOpenNowStock)
+            //起動中のForm名取得
+            List<string> openForms = new List<string>();
+            openForms = GetOpenFromName();
+            if(openForms.Contains("frmNowStocks"))
             {
                 MessageBox.Show("現在庫画面はすでに開いています。複数同時に開くことはできません。");
-                return; 
+                return;
             }
 
             string ItemCD = ctrFrmSearchItem1.txtItemCD.Text;
@@ -63,8 +63,6 @@ namespace StockControlSystem
             frmNowStocks frmNowStocks = new frmNowStocks(ItemCD, ItemName);
             frmNowStocks.ShowDialog();
             frmNowStocks.Dispose();
-
-            IsOpenNowStock = false;
         }
 
         //履歴検索ボタン
@@ -88,8 +86,11 @@ namespace StockControlSystem
             dgv.DataSource = dt;
 
             //入出庫管理画面ボタン有効化
-            btnChangeForm.Enabled = dt.Rows.Count > 0 ? true : false;
-
+            if(dt.Rows.Count > 0)
+            {
+                btnChangeForm.Enabled = true;
+                btnChangeForm.BackColor = Color.Aqua;
+            }
         }
         #endregion
 
@@ -120,6 +121,21 @@ namespace StockControlSystem
 
             return sb.ToString();
         }
+        #endregion
+
+        #region■起動中Form名取得
+        private List<string> GetOpenFromName()
+        {
+            List<string> list = new List<string>();
+
+            foreach (Form form in Application.OpenForms)
+            {
+                list.Add(form.Name);
+            }
+
+            return list;
+        }
+
         #endregion
     }
 }

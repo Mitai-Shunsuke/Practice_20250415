@@ -37,9 +37,10 @@
             this.radioBtnOut = new System.Windows.Forms.RadioButton();
             this.pnlIO = new System.Windows.Forms.Panel();
             this.pnlItem = new System.Windows.Forms.Panel();
-            this.pnlControl = new System.Windows.Forms.Panel();
-            this.radioBtnItem = new System.Windows.Forms.RadioButton();
-            this.radioBtnClass = new System.Windows.Forms.RadioButton();
+            this.ctrFrmSearchItem1 = new StockControlSystem.CtrFrmSearchItem();
+            this.ctrFrmSearchClass1 = new StockControlSystem.CtrFrmSearchClass();
+            this.radioBtnItem1 = new System.Windows.Forms.RadioButton();
+            this.radioBtnClass1 = new System.Windows.Forms.RadioButton();
             this.pnlDate = new System.Windows.Forms.Panel();
             this.chkBoxDateEnd = new System.Windows.Forms.CheckBox();
             this.chkBoxDateStart = new System.Windows.Forms.CheckBox();
@@ -57,9 +58,9 @@
             // btnSearch
             // 
             this.btnSearch.BackColor = System.Drawing.Color.SpringGreen;
-            this.btnSearch.Location = new System.Drawing.Point(656, 314);
+            this.btnSearch.Location = new System.Drawing.Point(651, 314);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(119, 52);
+            this.btnSearch.Size = new System.Drawing.Size(124, 52);
             this.btnSearch.TabIndex = 0;
             this.btnSearch.Text = "検索";
             this.btnSearch.UseVisualStyleBackColor = false;
@@ -142,50 +143,60 @@
             this.pnlIO.Controls.Add(this.radioBtnIn);
             this.pnlIO.Location = new System.Drawing.Point(19, 21);
             this.pnlIO.Name = "pnlIO";
-            this.pnlIO.Size = new System.Drawing.Size(631, 53);
+            this.pnlIO.Size = new System.Drawing.Size(626, 53);
             this.pnlIO.TabIndex = 8;
             // 
             // pnlItem
             // 
             this.pnlItem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlItem.Controls.Add(this.pnlControl);
-            this.pnlItem.Controls.Add(this.radioBtnItem);
-            this.pnlItem.Controls.Add(this.radioBtnClass);
+            this.pnlItem.Controls.Add(this.ctrFrmSearchItem1);
+            this.pnlItem.Controls.Add(this.ctrFrmSearchClass1);
+            this.pnlItem.Controls.Add(this.radioBtnItem1);
+            this.pnlItem.Controls.Add(this.radioBtnClass1);
             this.pnlItem.Location = new System.Drawing.Point(19, 93);
             this.pnlItem.Name = "pnlItem";
-            this.pnlItem.Size = new System.Drawing.Size(631, 189);
+            this.pnlItem.Size = new System.Drawing.Size(626, 189);
             this.pnlItem.TabIndex = 9;
             // 
-            // pnlControl
+            // ctrFrmSearchItem1
             // 
-            this.pnlControl.Location = new System.Drawing.Point(46, 43);
-            this.pnlControl.Name = "pnlControl";
-            this.pnlControl.Size = new System.Drawing.Size(563, 141);
-            this.pnlControl.TabIndex = 14;
+            this.ctrFrmSearchItem1.Location = new System.Drawing.Point(98, 37);
+            this.ctrFrmSearchItem1.Name = "ctrFrmSearchItem1";
+            this.ctrFrmSearchItem1.Size = new System.Drawing.Size(507, 151);
+            this.ctrFrmSearchItem1.TabIndex = 12;
+            this.ctrFrmSearchItem1.Visible = false;
             // 
-            // radioBtnItem
+            // ctrFrmSearchClass1
             // 
-            this.radioBtnItem.AutoSize = true;
-            this.radioBtnItem.Location = new System.Drawing.Point(208, 17);
-            this.radioBtnItem.Name = "radioBtnItem";
-            this.radioBtnItem.Size = new System.Drawing.Size(96, 19);
-            this.radioBtnItem.TabIndex = 13;
-            this.radioBtnItem.TabStop = true;
-            this.radioBtnItem.Text = "商品で絞る";
-            this.radioBtnItem.UseVisualStyleBackColor = true;
-            this.radioBtnItem.CheckedChanged += new System.EventHandler(this.radioBtnItem_CheckedChanged);
+            this.ctrFrmSearchClass1.Location = new System.Drawing.Point(98, 36);
+            this.ctrFrmSearchClass1.Name = "ctrFrmSearchClass1";
+            this.ctrFrmSearchClass1.Size = new System.Drawing.Size(421, 157);
+            this.ctrFrmSearchClass1.TabIndex = 11;
+            this.ctrFrmSearchClass1.Visible = false;
             // 
-            // radioBtnClass
+            // radioBtnItem1
             // 
-            this.radioBtnClass.AutoSize = true;
-            this.radioBtnClass.Location = new System.Drawing.Point(46, 17);
-            this.radioBtnClass.Name = "radioBtnClass";
-            this.radioBtnClass.Size = new System.Drawing.Size(96, 19);
-            this.radioBtnClass.TabIndex = 12;
-            this.radioBtnClass.TabStop = true;
-            this.radioBtnClass.Text = "分類で絞る";
-            this.radioBtnClass.UseVisualStyleBackColor = true;
-            this.radioBtnClass.CheckedChanged += new System.EventHandler(this.radioBtnClass_CheckedChanged);
+            this.radioBtnItem1.AutoSize = true;
+            this.radioBtnItem1.Location = new System.Drawing.Point(208, 18);
+            this.radioBtnItem1.Name = "radioBtnItem1";
+            this.radioBtnItem1.Size = new System.Drawing.Size(96, 19);
+            this.radioBtnItem1.TabIndex = 1;
+            this.radioBtnItem1.TabStop = true;
+            this.radioBtnItem1.Text = "商品で絞る";
+            this.radioBtnItem1.UseVisualStyleBackColor = true;
+            this.radioBtnItem1.CheckedChanged += new System.EventHandler(this.radioBtnItem1_CheckedChanged);
+            // 
+            // radioBtnClass1
+            // 
+            this.radioBtnClass1.AutoSize = true;
+            this.radioBtnClass1.Location = new System.Drawing.Point(46, 18);
+            this.radioBtnClass1.Name = "radioBtnClass1";
+            this.radioBtnClass1.Size = new System.Drawing.Size(96, 19);
+            this.radioBtnClass1.TabIndex = 0;
+            this.radioBtnClass1.TabStop = true;
+            this.radioBtnClass1.Text = "分類で絞る";
+            this.radioBtnClass1.UseVisualStyleBackColor = true;
+            this.radioBtnClass1.CheckedChanged += new System.EventHandler(this.radioBtnClass1_CheckedChanged);
             // 
             // pnlDate
             // 
@@ -198,7 +209,7 @@
             this.pnlDate.Controls.Add(this.dtpEnd);
             this.pnlDate.Location = new System.Drawing.Point(19, 302);
             this.pnlDate.Name = "pnlDate";
-            this.pnlDate.Size = new System.Drawing.Size(631, 64);
+            this.pnlDate.Size = new System.Drawing.Size(626, 64);
             this.pnlDate.TabIndex = 9;
             // 
             // chkBoxDateEnd
@@ -266,7 +277,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(808, 760);
+            this.ClientSize = new System.Drawing.Size(810, 760);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBoxDate);
             this.Controls.Add(this.checkBoxItem);
@@ -305,15 +316,13 @@
         private System.Windows.Forms.DateTimePicker dtpEnd;
         private System.Windows.Forms.DateTimePicker dtpStart;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton radioBtnItem;
-        private System.Windows.Forms.RadioButton radioBtnClass;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel pnlControl;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox chkBoxDateEnd;
         private System.Windows.Forms.CheckBox chkBoxDateStart;
-        private System.Windows.Forms.UserControl CtrFrmSearchClass1;
-        private System.Windows.Forms.UserControl CtrFrmSearchItem1;
+        private System.Windows.Forms.RadioButton radioBtnItem1;
+        private System.Windows.Forms.RadioButton radioBtnClass1;
         private CtrFrmSearchItem ctrFrmSearchItem1;
+        private CtrFrmSearchClass ctrFrmSearchClass1;
     }
 }
