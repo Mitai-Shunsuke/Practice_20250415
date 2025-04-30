@@ -138,20 +138,6 @@ namespace StockControlSystem
 
         }
 
-        //ラジオボタン（分類）
-        private void radioBtnClass_CheckedChanged(object sender, EventArgs e)
-        {
-            //分類コントロール表示
-            ctrFrmSearchClass1.Visible = radioBtnClass1.Checked;
-        }
-
-        //ラジオボタン（商品）
-        private void radioBtnItem_CheckedChanged(object sender, EventArgs e)
-        {
-            //商品コントロール表示
-            ctrFrmSearchItem1.Visible = radioBtnItem1.Checked;
-        }
-
         //チェックボックス（カレンダー開始）
         private void chkBoxDateStart_CheckedChanged(object sender, EventArgs e)
         {
@@ -358,7 +344,6 @@ namespace StockControlSystem
 
             return parameters;
         }
-
         #endregion
 
         #region■入力チェック
@@ -376,8 +361,7 @@ namespace StockControlSystem
                     MessageBox.Show("入出庫期間を修正してください。");
                     return false;
                 }
-            }
-            
+            }            
             return true;
         }
         #endregion

@@ -44,6 +44,7 @@
             this.ctrFrmSearchClass1 = new StockControlSystem.CtrFrmSearchClass();
             this.ctrFrmSearchItem1 = new StockControlSystem.CtrFrmSearchItem();
             this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnBackInit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -196,11 +197,24 @@
             this.btnUpdate.Visible = false;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
+            // btnBackInit
+            // 
+            this.btnBackInit.BackColor = System.Drawing.Color.IndianRed;
+            this.btnBackInit.Location = new System.Drawing.Point(963, 297);
+            this.btnBackInit.Name = "btnBackInit";
+            this.btnBackInit.Size = new System.Drawing.Size(109, 35);
+            this.btnBackInit.TabIndex = 15;
+            this.btnBackInit.Text = "元に戻す";
+            this.btnBackInit.UseVisualStyleBackColor = false;
+            this.btnBackInit.Visible = false;
+            this.btnBackInit.Click += new System.EventHandler(this.btnBackInit_Click);
+            // 
             // frmStockControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 561);
+            this.Controls.Add(this.btnBackInit);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
@@ -235,5 +249,6 @@
         private CtrFrmSearchClass ctrFrmSearchClass1;
         private CtrFrmSearchItem ctrFrmSearchItem1;
         private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnBackInit;
     }
 }

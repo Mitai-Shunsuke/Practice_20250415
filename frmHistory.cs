@@ -54,7 +54,7 @@ namespace StockControlSystem
 
             //起動中のForm名取得
             List<string> openForms = new List<string>();
-            openForms = GetOpenFromName();
+            openForms = GetOpenFormName();
             if (openForms.Contains("frmStockControl"))
             {
                 MessageBox.Show("入出庫管理画面はすでに開いています。複数同時に開くことはできません。");
@@ -65,7 +65,7 @@ namespace StockControlSystem
 
             frmStockControl frmStockControl = new frmStockControl(ItemCD);
             frmStockControl.ShowDialog();
-            frmStockControl.Dispose();
+            frmStockControl.Dispose();            
         }
         #endregion
 
@@ -75,7 +75,7 @@ namespace StockControlSystem
         {
             //起動中のForm名取得
             List<string> openForms = new List<string>();
-            openForms = GetOpenFromName();
+            openForms = GetOpenFormName();
             if(openForms.Contains("frmNowStocks"))
             {
                 MessageBox.Show("現在庫画面はすでに開いています。複数同時に開くことはできません。");
@@ -95,7 +95,7 @@ namespace StockControlSystem
         {
             //起動中のForm名取得
             List<string> openForms = new List<string>();
-            openForms = GetOpenFromName();
+            openForms = GetOpenFormName();
             if (openForms.Contains("frmStockControl"))
             {
                 MessageBox.Show("入出庫管理画面はすでに開いています。複数同時に開くことはできません。");
@@ -107,6 +107,9 @@ namespace StockControlSystem
             frmStockControl frmStockControl = new frmStockControl(ItemCD);
             frmStockControl.ShowDialog();
             frmStockControl.Dispose();
+
+            //データを更新
+            btnHistory_Click(null, null);
         }
 
         //履歴検索ボタン
@@ -170,7 +173,7 @@ namespace StockControlSystem
         #endregion
 
         #region■起動中Form名取得
-        private List<string> GetOpenFromName()
+        private List<string> GetOpenFormName()
         {
             List<string> list = new List<string>();
 

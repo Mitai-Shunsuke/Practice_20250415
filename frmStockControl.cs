@@ -33,6 +33,9 @@ namespace StockControlSystem
         //履歴画面から遷移時のItemCD
         private string hItemCD;
 
+        //履歴画面から起動時のデータ保持用
+        private DataTable InitializeDt;
+
         #endregion
 
         #region■ロード
@@ -84,8 +87,16 @@ namespace StockControlSystem
             DataTable dt = new DataTable();
             dt = bat.SelectSQL(query, parameters);
 
-            //表示
-            ShowDataGridView(dt);
+            if(dt.Rows.Count > 0)
+            {
+                //初期データを保持
+                InitializeDt = dt;
+
+                //表示
+                ShowDataGridView(dt, true);
+                btnBackInit.Visible = true;
+            }
+            
         }
         #endregion
 
@@ -239,6 +250,13 @@ namespace StockControlSystem
                 dataGridView1.Rows.RemoveAt(cellRow);
             }
         }
+
+        //元に戻すボタン
+        private void btnBackInit_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("すべて元に戻しますか？","注意", MessageBoxButtons.OKCancel);
+            if(result == DialogResult.OK) ShowDataGridView(InitializeDt, false); //表を初期化
+        }
         #endregion
 
         #region■SQL作成
@@ -334,10 +352,7 @@ namespace StockControlSystem
                 AddParam(parameter, GetSqlParameterStaffCD());//StaffCD
                 
                 //６項目すべて有効なときだけ追加
-                if (parameter.Count < 6)
-                {
-                    return null;
-                }
+                if (parameter.Count < 6) return null;
 
                 allParams.Add(parameter);
             }
@@ -493,10 +508,10 @@ namespace StockControlSystem
         #endregion
 
         #region■DataGridViewの表示（履歴画面から）
-        private void ShowDataGridView(DataTable dt)
+        //Type:True 通常表示。False 元に戻すボタン
+        private void ShowDataGridView(DataTable dt, bool type)
         {
-            //「区別」列作成
-            SettingComboBox();
+            if(type)SettingComboBox(); dataGridView1.Rows.Clear(); //区別列作成
 
             foreach (DataRow row in dt.Rows)
             {
@@ -516,11 +531,6 @@ namespace StockControlSystem
                 dataGridView1.Rows[rowIndex].Cells[6].Value = row["備考欄"].ToString();
             }
         }
-        #endregion
-
-        #region■デバッグ用
-        
-
         #endregion
     }
 }
