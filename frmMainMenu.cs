@@ -39,18 +39,22 @@ namespace StockControlSystem
         {
             frmNowStocks frmHistory = new frmNowStocks();
             frmHistory.ShowDialog();
+            frmHistory.Dispose();
         }
         //入出庫管理ボタン
         private void btnIOControl_Click(object sender, EventArgs e)
         {
             frmStockControl frmStockControl = new frmStockControl(StaffCD);
             frmStockControl.ShowDialog();
+            frmStockControl.Dispose();
         }
 
         //入出庫履歴
         private void btnHistory_Click(object sender, EventArgs e)
         {
-            
+            frmHistory frmHistory = new frmHistory();
+            frmHistory.ShowDialog();
+            frmHistory.Dispose();
         }
 
         //終了ボタン

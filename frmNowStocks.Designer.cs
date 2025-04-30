@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnSearch = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgv = new System.Windows.Forms.DataGridView();
             this.checkBoxIO = new System.Windows.Forms.CheckBox();
             this.checkBoxItem = new System.Windows.Forms.CheckBox();
             this.checkBoxDate = new System.Windows.Forms.CheckBox();
@@ -37,15 +37,19 @@
             this.radioBtnOut = new System.Windows.Forms.RadioButton();
             this.pnlIO = new System.Windows.Forms.Panel();
             this.pnlItem = new System.Windows.Forms.Panel();
-            this.radioBtnItem = new System.Windows.Forms.RadioButton();
-            this.radioBtnClass = new System.Windows.Forms.RadioButton();
             this.ctrFrmSearchItem1 = new StockControlSystem.CtrFrmSearchItem();
-            this.ctrFrmSearch1 = new StockControlSystem.CtrFrmSearchClass();
+            this.ctrFrmSearchClass1 = new StockControlSystem.CtrFrmSearchClass();
+            this.radioBtnItem1 = new System.Windows.Forms.RadioButton();
+            this.radioBtnClass1 = new System.Windows.Forms.RadioButton();
             this.pnlDate = new System.Windows.Forms.Panel();
+            this.chkBoxDateEnd = new System.Windows.Forms.CheckBox();
+            this.chkBoxDateStart = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.pnlIO.SuspendLayout();
             this.pnlItem.SuspendLayout();
             this.pnlDate.SuspendLayout();
@@ -54,24 +58,28 @@
             // btnSearch
             // 
             this.btnSearch.BackColor = System.Drawing.Color.SpringGreen;
-            this.btnSearch.Location = new System.Drawing.Point(19, 384);
+            this.btnSearch.Location = new System.Drawing.Point(651, 314);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(936, 52);
+            this.btnSearch.Size = new System.Drawing.Size(124, 52);
             this.btnSearch.TabIndex = 0;
             this.btnSearch.Text = "検索";
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // dataGridView1
+            // dgv
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(19, 442);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(936, 306);
-            this.dataGridView1.TabIndex = 1;
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Location = new System.Drawing.Point(19, 401);
+            this.dgv.Name = "dgv";
+            this.dgv.ReadOnly = true;
+            this.dgv.RowHeadersWidth = 51;
+            this.dgv.RowTemplate.Height = 24;
+            this.dgv.Size = new System.Drawing.Size(756, 347);
+            this.dgv.TabIndex = 1;
+            this.dgv.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellDoubleClick);
+            this.dgv.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEnter);
             // 
             // checkBoxIO
             // 
@@ -87,7 +95,7 @@
             // checkBoxItem
             // 
             this.checkBoxItem.AutoSize = true;
-            this.checkBoxItem.Location = new System.Drawing.Point(273, 14);
+            this.checkBoxItem.Location = new System.Drawing.Point(12, 86);
             this.checkBoxItem.Name = "checkBoxItem";
             this.checkBoxItem.Size = new System.Drawing.Size(218, 19);
             this.checkBoxItem.TabIndex = 4;
@@ -98,7 +106,7 @@
             // checkBoxDate
             // 
             this.checkBoxDate.AutoSize = true;
-            this.checkBoxDate.Location = new System.Drawing.Point(12, 216);
+            this.checkBoxDate.Location = new System.Drawing.Point(12, 292);
             this.checkBoxDate.Name = "checkBoxDate";
             this.checkBoxDate.Size = new System.Drawing.Size(167, 19);
             this.checkBoxDate.TabIndex = 5;
@@ -109,7 +117,7 @@
             // radioBtnIn
             // 
             this.radioBtnIn.AutoSize = true;
-            this.radioBtnIn.Location = new System.Drawing.Point(66, 44);
+            this.radioBtnIn.Location = new System.Drawing.Point(46, 18);
             this.radioBtnIn.Name = "radioBtnIn";
             this.radioBtnIn.Size = new System.Drawing.Size(83, 19);
             this.radioBtnIn.TabIndex = 6;
@@ -120,7 +128,7 @@
             // radioBtnOut
             // 
             this.radioBtnOut.AutoSize = true;
-            this.radioBtnOut.Location = new System.Drawing.Point(66, 100);
+            this.radioBtnOut.Location = new System.Drawing.Point(208, 18);
             this.radioBtnOut.Name = "radioBtnOut";
             this.radioBtnOut.Size = new System.Drawing.Size(83, 19);
             this.radioBtnOut.TabIndex = 7;
@@ -135,114 +143,159 @@
             this.pnlIO.Controls.Add(this.radioBtnIn);
             this.pnlIO.Location = new System.Drawing.Point(19, 21);
             this.pnlIO.Name = "pnlIO";
-            this.pnlIO.Size = new System.Drawing.Size(230, 165);
+            this.pnlIO.Size = new System.Drawing.Size(626, 53);
             this.pnlIO.TabIndex = 8;
             // 
             // pnlItem
             // 
             this.pnlItem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlItem.Controls.Add(this.radioBtnItem);
-            this.pnlItem.Controls.Add(this.radioBtnClass);
             this.pnlItem.Controls.Add(this.ctrFrmSearchItem1);
-            this.pnlItem.Controls.Add(this.ctrFrmSearch1);
-            this.pnlItem.Location = new System.Drawing.Point(280, 21);
+            this.pnlItem.Controls.Add(this.ctrFrmSearchClass1);
+            this.pnlItem.Controls.Add(this.radioBtnItem1);
+            this.pnlItem.Controls.Add(this.radioBtnClass1);
+            this.pnlItem.Location = new System.Drawing.Point(19, 93);
             this.pnlItem.Name = "pnlItem";
-            this.pnlItem.Size = new System.Drawing.Size(675, 357);
+            this.pnlItem.Size = new System.Drawing.Size(626, 189);
             this.pnlItem.TabIndex = 9;
-            // 
-            // radioBtnItem
-            // 
-            this.radioBtnItem.AutoSize = true;
-            this.radioBtnItem.Location = new System.Drawing.Point(5, 221);
-            this.radioBtnItem.Name = "radioBtnItem";
-            this.radioBtnItem.Size = new System.Drawing.Size(96, 19);
-            this.radioBtnItem.TabIndex = 13;
-            this.radioBtnItem.TabStop = true;
-            this.radioBtnItem.Text = "商品で絞る";
-            this.radioBtnItem.UseVisualStyleBackColor = true;
-            this.radioBtnItem.CheckedChanged += new System.EventHandler(this.radioBtnItem_CheckedChanged);
-            // 
-            // radioBtnClass
-            // 
-            this.radioBtnClass.AutoSize = true;
-            this.radioBtnClass.Location = new System.Drawing.Point(3, 62);
-            this.radioBtnClass.Name = "radioBtnClass";
-            this.radioBtnClass.Size = new System.Drawing.Size(96, 19);
-            this.radioBtnClass.TabIndex = 12;
-            this.radioBtnClass.TabStop = true;
-            this.radioBtnClass.Text = "分類で絞る";
-            this.radioBtnClass.UseVisualStyleBackColor = true;
-            this.radioBtnClass.CheckedChanged += new System.EventHandler(this.radioBtnClass_CheckedChanged);
             // 
             // ctrFrmSearchItem1
             // 
-            this.ctrFrmSearchItem1.Location = new System.Drawing.Point(121, 179);
+            this.ctrFrmSearchItem1.Location = new System.Drawing.Point(98, 37);
             this.ctrFrmSearchItem1.Name = "ctrFrmSearchItem1";
             this.ctrFrmSearchItem1.Size = new System.Drawing.Size(507, 151);
-            this.ctrFrmSearchItem1.TabIndex = 11;
+            this.ctrFrmSearchItem1.TabIndex = 12;
+            this.ctrFrmSearchItem1.Visible = false;
             // 
-            // ctrFrmSearch1
+            // ctrFrmSearchClass1
             // 
-            this.ctrFrmSearch1.Location = new System.Drawing.Point(116, 17);
-            this.ctrFrmSearch1.Name = "ctrFrmSearch1";
-            this.ctrFrmSearch1.Size = new System.Drawing.Size(422, 156);
-            this.ctrFrmSearch1.TabIndex = 10;
+            this.ctrFrmSearchClass1.Location = new System.Drawing.Point(98, 36);
+            this.ctrFrmSearchClass1.Name = "ctrFrmSearchClass1";
+            this.ctrFrmSearchClass1.Size = new System.Drawing.Size(421, 157);
+            this.ctrFrmSearchClass1.TabIndex = 11;
+            this.ctrFrmSearchClass1.Visible = false;
+            // 
+            // radioBtnItem1
+            // 
+            this.radioBtnItem1.AutoSize = true;
+            this.radioBtnItem1.Location = new System.Drawing.Point(208, 18);
+            this.radioBtnItem1.Name = "radioBtnItem1";
+            this.radioBtnItem1.Size = new System.Drawing.Size(96, 19);
+            this.radioBtnItem1.TabIndex = 1;
+            this.radioBtnItem1.TabStop = true;
+            this.radioBtnItem1.Text = "商品で絞る";
+            this.radioBtnItem1.UseVisualStyleBackColor = true;
+            this.radioBtnItem1.CheckedChanged += new System.EventHandler(this.radioBtnItem1_CheckedChanged);
+            // 
+            // radioBtnClass1
+            // 
+            this.radioBtnClass1.AutoSize = true;
+            this.radioBtnClass1.Location = new System.Drawing.Point(46, 18);
+            this.radioBtnClass1.Name = "radioBtnClass1";
+            this.radioBtnClass1.Size = new System.Drawing.Size(96, 19);
+            this.radioBtnClass1.TabIndex = 0;
+            this.radioBtnClass1.TabStop = true;
+            this.radioBtnClass1.Text = "分類で絞る";
+            this.radioBtnClass1.UseVisualStyleBackColor = true;
+            this.radioBtnClass1.CheckedChanged += new System.EventHandler(this.radioBtnClass1_CheckedChanged);
             // 
             // pnlDate
             // 
             this.pnlDate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlDate.Controls.Add(this.chkBoxDateEnd);
+            this.pnlDate.Controls.Add(this.chkBoxDateStart);
+            this.pnlDate.Controls.Add(this.checkBox1);
             this.pnlDate.Controls.Add(this.dtpStart);
             this.pnlDate.Controls.Add(this.label1);
             this.pnlDate.Controls.Add(this.dtpEnd);
-            this.pnlDate.Location = new System.Drawing.Point(19, 226);
+            this.pnlDate.Location = new System.Drawing.Point(19, 302);
             this.pnlDate.Name = "pnlDate";
-            this.pnlDate.Size = new System.Drawing.Size(230, 152);
+            this.pnlDate.Size = new System.Drawing.Size(626, 64);
             this.pnlDate.TabIndex = 9;
+            // 
+            // chkBoxDateEnd
+            // 
+            this.chkBoxDateEnd.AutoSize = true;
+            this.chkBoxDateEnd.Location = new System.Drawing.Point(305, 23);
+            this.chkBoxDateEnd.Name = "chkBoxDateEnd";
+            this.chkBoxDateEnd.Size = new System.Drawing.Size(18, 17);
+            this.chkBoxDateEnd.TabIndex = 5;
+            this.chkBoxDateEnd.UseVisualStyleBackColor = true;
+            this.chkBoxDateEnd.CheckedChanged += new System.EventHandler(this.chkBoxDateEnd_CheckedChanged);
+            // 
+            // chkBoxDateStart
+            // 
+            this.chkBoxDateStart.AutoSize = true;
+            this.chkBoxDateStart.Location = new System.Drawing.Point(21, 24);
+            this.chkBoxDateStart.Name = "chkBoxDateStart";
+            this.chkBoxDateStart.Size = new System.Drawing.Size(18, 17);
+            this.chkBoxDateStart.TabIndex = 4;
+            this.chkBoxDateStart.UseVisualStyleBackColor = true;
+            this.chkBoxDateStart.CheckedChanged += new System.EventHandler(this.chkBoxDateStart_CheckedChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(-61, 21);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(18, 17);
+            this.checkBox1.TabIndex = 3;
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // dtpStart
             // 
-            this.dtpStart.Location = new System.Drawing.Point(14, 26);
+            this.dtpStart.Location = new System.Drawing.Point(46, 21);
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(200, 22);
             this.dtpStart.TabIndex = 1;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(59, 63);
+            this.label1.Location = new System.Drawing.Point(257, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
+            this.label1.Size = new System.Drawing.Size(47, 23);
             this.label1.TabIndex = 0;
             this.label1.Text = "～";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dtpEnd
             // 
-            this.dtpEnd.Location = new System.Drawing.Point(14, 103);
+            this.dtpEnd.Location = new System.Drawing.Point(329, 21);
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(200, 22);
             this.dtpEnd.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(16, 375);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 23);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "検索結果";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmNowStocks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1046, 760);
+            this.ClientSize = new System.Drawing.Size(810, 760);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBoxDate);
             this.Controls.Add(this.checkBoxItem);
             this.Controls.Add(this.checkBoxIO);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgv);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.pnlItem);
-            this.Controls.Add(this.pnlDate);
             this.Controls.Add(this.pnlIO);
+            this.Controls.Add(this.pnlDate);
             this.Name = "frmNowStocks";
             this.Text = "現在庫管理";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.pnlIO.ResumeLayout(false);
             this.pnlIO.PerformLayout();
             this.pnlItem.ResumeLayout(false);
             this.pnlItem.PerformLayout();
             this.pnlDate.ResumeLayout(false);
+            this.pnlDate.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,7 +304,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv;
         private System.Windows.Forms.CheckBox checkBoxIO;
         private System.Windows.Forms.CheckBox checkBoxItem;
         private System.Windows.Forms.CheckBox checkBoxDate;
@@ -263,9 +316,13 @@
         private System.Windows.Forms.DateTimePicker dtpEnd;
         private System.Windows.Forms.DateTimePicker dtpStart;
         private System.Windows.Forms.Label label1;
-        private CtrFrmSearchClass ctrFrmSearch1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkBoxDateEnd;
+        private System.Windows.Forms.CheckBox chkBoxDateStart;
+        private System.Windows.Forms.RadioButton radioBtnItem1;
+        private System.Windows.Forms.RadioButton radioBtnClass1;
         private CtrFrmSearchItem ctrFrmSearchItem1;
-        private System.Windows.Forms.RadioButton radioBtnItem;
-        private System.Windows.Forms.RadioButton radioBtnClass;
+        private CtrFrmSearchClass ctrFrmSearchClass1;
     }
 }

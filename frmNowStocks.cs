@@ -21,27 +21,82 @@ namespace StockControlSystem
         #endregion
 
         #region■ロード
+        //メイン画面から遷移
         public frmNowStocks()
         {
             InitializeComponent();
 
-            //ラジオボタン
+            //分類コントロール表示
+            ctrFrmSearchClass1.Visible = true;
+
+            //初期画面表示
+            InitializeFromMainmenu();
+        }
+
+        //入出庫履歴画面からの遷移
+        public frmNowStocks(string itemCD, string itemName)
+        {
+            InitializeComponent();
+
+            //商品コントロール表示
+            ctrFrmSearchItem1.Visible = true;
+            ctrFrmSearchItem1.txtItemCD.Text = itemCD;
+            ctrFrmSearchItem1.txtItemName.Text = itemName;
+
+            //初期画面表示
+            InitializeFromHistory();
+
+            //検索後の画面で表示
+            btnSearch_Click(null, null);
+        }
+
+        //メインメニューから遷移
+        private void InitializeFromMainmenu()
+        {
+            //条件①（入出庫）
+            pnlIO.BackColor = Color.Gainsboro;
             radioBtnIn.Checked = true;
             radioBtnIn.Enabled = false;
             radioBtnOut.Enabled = false;
 
-            //背景色
-            pnlIO.BackColor = Color.Gainsboro;
+            //条件②（分類か商品）
             pnlItem.BackColor = Color.Gainsboro;
+            radioBtnClass1.Checked = true;
+            radioBtnClass1.Enabled = false;
+            radioBtnItem1.Enabled = false;
+            
+            //条件③（期間）
             pnlDate.BackColor = Color.Gainsboro;
-
-            //カレンダー
             dtpStart.Enabled = false;
             dtpEnd.Enabled = false;
+            chkBoxDateStart.Checked = true;
+            chkBoxDateEnd.Checked = true;
+            chkBoxDateStart.Enabled = false;
+            chkBoxDateEnd.Enabled = false;
+        }
 
-            ////コントロール
-            //CtrFrmSearchClass ctrFrmClass = new CtrFrmSearchClass();
-            //ctrFrmClass.btnSearchClass.Enabled = false;
+        //履歴画面から遷移
+        private void InitializeFromHistory()
+        {
+            //条件①（入出庫）
+            pnlIO.BackColor = Color.Gainsboro;
+            radioBtnIn.Checked = true;
+            radioBtnIn.Enabled = false;
+            radioBtnOut.Enabled = false;
+
+            //条件②（分類か商品）
+            pnlItem.BackColor = Color.Honeydew;
+            checkBoxItem.Checked = true;
+            radioBtnItem1.Checked = true;
+
+            //条件③（期間）
+            pnlDate.BackColor = Color.Gainsboro;
+            dtpStart.Enabled = false;
+            dtpEnd.Enabled = false;
+            chkBoxDateStart.Checked = true;
+            chkBoxDateEnd.Checked = true;
+            chkBoxDateStart.Enabled = false;
+            chkBoxDateEnd.Enabled = false;
         }
         #endregion
 
@@ -52,17 +107,9 @@ namespace StockControlSystem
             //背景色
             pnlIO.BackColor = checkBoxIO.Checked ? Color.Honeydew : Color.Gainsboro;
 
-            //ボタン有効化
-            if (checkBoxIO.Checked)
-            {
-                radioBtnIn.Enabled = true;
-                radioBtnOut.Enabled = true;
-            }
-            else
-            {
-                radioBtnIn.Enabled = false;
-                radioBtnOut.Enabled = false;
-            }
+            bool IOCheck = checkBoxIO.Checked;
+            radioBtnIn.Enabled = IOCheck;
+            radioBtnOut.Enabled = IOCheck;
         }
 
         //チェックボタン（商品分類、商品）
@@ -71,6 +118,9 @@ namespace StockControlSystem
             //背景色
             pnlItem.BackColor = checkBoxItem.Checked ? Color.Honeydew : Color.Gainsboro;
 
+            bool ItemCheck = checkBoxItem.Checked;
+            radioBtnClass1.Enabled = ItemCheck;
+            radioBtnItem1.Enabled = ItemCheck;
         }
 
         //チェックボタン（登録期間）
@@ -80,32 +130,77 @@ namespace StockControlSystem
             pnlDate.BackColor = checkBoxDate.Checked ? Color.Honeydew : Color.Gainsboro;
 
             //カレンダー有効化
-            if (checkBoxDate.Checked)
-            {
-                dtpStart.Enabled = true;
-                dtpEnd.Enabled = true;
-            }
-            else
-            {
-                dtpStart.Enabled = false;
-                dtpEnd.Enabled = false;
-            }
-        }
-
-        //ラジオボタン（分類）
-        private void radioBtnClass_CheckedChanged(object sender, EventArgs e)
-        {
-            //コントロールの有効化
+            bool dateChecked = checkBoxDate.Checked;
+            dtpStart.Enabled = dateChecked;
+            dtpEnd.Enabled = dateChecked;
+            chkBoxDateStart.Enabled = dateChecked;
+            chkBoxDateEnd.Enabled = dateChecked;
 
         }
 
-        //ラジオボタン（商品）
-        private void radioBtnItem_CheckedChanged(object sender, EventArgs e)
+        //チェックボックス（カレンダー開始）
+        private void chkBoxDateStart_CheckedChanged(object sender, EventArgs e)
         {
+            //開始カレンダー有効化
+            dtpStart.Enabled = chkBoxDateStart.Checked ? true : false;
+        }
 
+        //チェックボックス（カレンダー終了）
+        private void chkBoxDateEnd_CheckedChanged(object sender, EventArgs e)
+        {
+            //終了カレンダー有効化
+            dtpEnd.Enabled = chkBoxDateEnd.Checked ? true : false;
+        }
+
+        //DataGridViewのセル選択変更
+        private void dgv_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            ////背景色をすべて白色にする
+            //foreach (DataGridViewRow row in dgv.Rows)
+            //{
+            //    row.DefaultCellStyle.BackColor = Color.White;
+            //}
+
+            ////行背景色を変える
+            //dgv.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCyan;
+        }
+
+        //DataGridViewダブルクリック
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //起動中のフォーム名を取得
+            List<string> OpenForms = new List<string>();
+            OpenForms = GetOpenFromName();
+            if(OpenForms.Contains("frmHistory"))
+            {
+                MessageBox.Show("履歴画面はすでに開いています。複数同時に開くことはできません。");
+                return;
+            }
+
+            //商品CDと名称取得
+            string dgvItemCD = dgv.Rows[e.RowIndex].Cells[2].Value.ToString();
+            string dgvItemName = dgv.Rows[e.RowIndex].Cells[3].Value.ToString();
+
+            frmHistory frmHistory = new frmHistory(dgvItemCD, dgvItemName);
+            frmHistory.ShowDialog();
+            frmHistory.Dispose();
+        }
+
+        //チェックボタン（分類）
+        private void radioBtnClass1_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrFrmSearchClass1.Visible = radioBtnClass1.Checked;
+            ctrFrmSearchItem1.Visible = !radioBtnClass1.Checked;
+        }
+
+        //チェックボタン（商品）
+
+        private void radioBtnItem1_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrFrmSearchClass1.Visible = !radioBtnItem1.Checked;
+            ctrFrmSearchItem1.Visible = radioBtnItem1.Checked;
         }
         #endregion
-
 
         #region■ボタン
         //検索ボタン
@@ -126,9 +221,10 @@ namespace StockControlSystem
             dt = bat.SelectSQL(query, parameters);
 
             //表示
-            dataGridView1.DataSource = dt;
+            dgv.DataSource = dt;     
+            
+            dgv.DefaultCellStyle.BackColor= Color.White;
         }
-
         #endregion
 
         #region■SQL作成
@@ -165,8 +261,18 @@ namespace StockControlSystem
             sb.AppendLine("	,SUM(CASE WHEN H.IsReceived = 'True' AND H.Remarks NOT LIKE N'初期在庫' THEN H.Moving ELSE 0 END) AS '入庫数'");
             sb.AppendLine("	,SUM(CASE WHEN H.IsReceived = 'False' AND H.Remarks NOT LIKE N'初期在庫' THEN H.Moving ELSE 0 END) AS '出庫数'");
             sb.AppendLine("	FROM ID_IO_HISTORY H");
-            sb.AppendLine("	INNER JOIN IM_ITEM I ON H.ItemCD = I.ItemCD");
-            sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD");
+            sb.AppendLine("	INNER JOIN IM_ITEM I ON H.ItemCD = I.ItemCD");            
+
+            //②分類CD条件
+            if (checkBoxItem.Checked && radioBtnClass1.Checked)
+            {
+                sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD AND I.ItemClassCD = @ClassCD");
+            }
+            else
+            {
+                sb.AppendLine("	INNER JOIN IM_ITEM_CLASS IC ON IC.ItemClassCD = I.ItemClassCD");
+            }
+            
             sb.AppendLine(" WHERE 1=1");
 
             //①入出庫条件（ラジオボタン）
@@ -180,12 +286,25 @@ namespace StockControlSystem
                 sb.AppendLine("AND H.Remarks NOT LIKE N'初期在庫'");
                 sb.AppendLine("	AND H.IsReceived = 'False' ");
             }
+
+            //②商品CD条件
+            if(checkBoxItem.Checked && radioBtnItem1.Checked)
+            {
+                sb.AppendLine("AND H.ItemCD LIKE @ItemCD");
+            }
             
             //③日付期間条件
             if(checkBoxDate.Checked)
             {
-                sb.AppendLine("	AND @startDate<= H.IODate");
-                sb.AppendLine("	AND H.IODate <= @endDate");
+                if (chkBoxDateStart.Checked)
+                {
+                    sb.AppendLine("	AND @startDate<= H.IODate");
+                }
+
+                if(chkBoxDateEnd.Checked)
+                {
+                    sb.AppendLine("	AND H.IODate <= @endDate");
+                }              
             }
 
             sb.AppendLine("	GROUP BY  IC.ItemClassCD");
@@ -207,8 +326,17 @@ namespace StockControlSystem
         {
             List<SqlParameter> parameters = new List<SqlParameter>();
 
-            //③日付
-            if(checkBoxDate.Checked)
+            //②分類または商品条件
+            if (checkBoxItem.Checked)
+            {
+                string classCD = ctrFrmSearchClass1.txtClassCD.Text;
+                string itemCD = ctrFrmSearchItem1.txtItemCD.Text;
+                parameters.Add(new SqlParameter("@ClassCD", classCD));
+                parameters.Add(new SqlParameter("@ItemCD", "%" + itemCD + "%"));
+            }
+
+            //③日付条件
+            if (checkBoxDate.Checked)
             {
                 parameters.Add(new SqlParameter("@startDate", dtpStart.Value.ToString("yyyy/MM/dd")));
                 parameters.Add(new SqlParameter("@endDate", dtpEnd.Value.ToString("yyyy/MM/dd")));
@@ -216,7 +344,6 @@ namespace StockControlSystem
 
             return parameters;
         }
-
         #endregion
 
         #region■入力チェック
@@ -234,9 +361,21 @@ namespace StockControlSystem
                     MessageBox.Show("入出庫期間を修正してください。");
                     return false;
                 }
-            }
-            
+            }            
             return true;
+        }
+        #endregion
+
+        #region■起動中Form名取得
+        private List<string> GetOpenFromName()
+        {
+            List<string> list = new List<string>();
+
+            foreach(Form form in Application.OpenForms)
+            {
+                list.Add(form.Name);
+            }
+            return list;
         }
         #endregion
     }

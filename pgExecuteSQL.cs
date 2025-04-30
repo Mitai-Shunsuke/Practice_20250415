@@ -16,49 +16,38 @@ namespace StockControlSystem
         //DB接続パス
         private string conectDB = ConfigurationManager.AppSettings["connectionDB"];
 
-        //実行件数
-        private int results;
-
         //■1つずつ作成&実行
-        public void ExecuteSingleSQL(string query, List<SqlParameter> parameters)
+        public void ExecuteSingleSQL(string query, List<SqlParameter> parameters, SqlConnection conn, SqlTransaction tran)
         {
-            //SSMS起動
-            using (SqlConnection Conn = new SqlConnection(conectDB))
+            try
             {
-                //SSMSログイン
-                Conn.Open();
-
-                try
+                using (SqlCommand cmd = new SqlCommand(query, conn, tran))
                 {
-                    using (SqlCommand cmd = new SqlCommand(query, Conn))
+                    if (parameters != null && parameters.Count > 0)
                     {
-                        // パラメータを追加
-                        if (parameters != null && parameters.Count > 0)
-                        {
-                            cmd.Parameters.AddRange(parameters.ToArray());
-                        }
+                        cmd.Parameters.AddRange(parameters.ToArray());
+                    }
 
-                        // SQL実行（データ挿入など）
-                        cmd.ExecuteNonQuery();
-                    }                    
+                    //コミットは呼び出し元
+                    cmd.ExecuteNonQuery(); 
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("エラーが発生しました: " + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("エラーが発生しました: " + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
             }
         }
 
+
         //■まとめて実行
-        public void ExecuteMultipleSQL(string query, List<List<SqlParameter>> allParam)
+        public void ExecuteMultipleSQL(string query, List<List<SqlParameter>> allParam, SqlConnection conn, SqlTransaction tran)
         {
             //SSMS起動
             using (SqlConnection Conn = new SqlConnection(conectDB))
             {
                 //SSMSログイン
                 Conn.Open();
-                //トランザクション開始
-                SqlTransaction tran = Conn.BeginTransaction();
 
                 try
                 {
@@ -67,24 +56,19 @@ namespace StockControlSystem
 
                     foreach (var param in allParam)
                     {
-                        using (SqlCommand cmd = new SqlCommand(query, Conn, tran))
+                        using (SqlCommand cmd = new SqlCommand(query, Conn))
                         {
                             cmd.Parameters.AddRange(param.ToArray());
                             total += cmd.ExecuteNonQuery();
                         }
                     }
-
-                    tran.Commit();
-                    MessageBox.Show($"更新件数は、 {total}件です。");
                 }
                 catch (Exception ex)
                 {
-                    tran.Rollback();
+                    //tran.Rollback();
                     MessageBox.Show("エラーが発生しました: " + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
-
     }
-
 }
