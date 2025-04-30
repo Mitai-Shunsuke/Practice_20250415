@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -23,6 +24,9 @@ namespace StockControlSystem
         pgSelectSQL bat = new pgSelectSQL();
 
         pgExecuteSQL bat1 = new pgExecuteSQL();
+
+        //DB接続用
+        private string conectDB = ConfigurationManager.AppSettings["connectionDB"];
 
         //社員CD
         private int StaffCd;
@@ -199,42 +203,81 @@ namespace StockControlSystem
         //登録ボタン
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            //データの有無
-            if (dataGridView1.Rows.Count == 0) return;
+            using (SqlConnection conn = new SqlConnection(conectDB))
+            {
+                conn.Open();
+                SqlTransaction tran = conn.BeginTransaction();
+                try
+                {
 
-            //SQL作成
-            string query = CreateSQL_INSERT();
-
-            //パラメータ取得
-            List<List<SqlParameter>> allParam = new List<List<SqlParameter>>();
-            allParam = AddParameters();
-            if (allParam == null) return;
-
-            //実行
-            bat1.ExecuteMultipleSQL(query, allParam);
-
-            dataGridView1.Rows.Clear();
-
-            MessageBox.Show("データ処理が完了しました。");
+                    InsertData(conn, tran);
+                    tran.Commit();
+                    MessageBox.Show("データ処理が完了しました。");
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    MessageBox.Show("登録中にエラー：" + ex.Message);
+                }
+            }
         }
-
 
         //履歴更新ボタン
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            //既存のデータを全削除
-            string query = CreateSQL_Delete();
+            //確認メッセージ
+            DialogResult result = MessageBox.Show("更新しますか？", "確認", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.Cancel) return;            
+                        
+            using (SqlConnection conn = new SqlConnection(conectDB))
+            {
+                conn.Open();
+                //トランザクション開始
+                SqlTransaction tran = conn.BeginTransaction();
 
-            List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@ItemCD", hItemCD));
+                try
+                {
+                    // 既存のデータを全削除
+                    string query = CreateSQL_Delete();
+                    List<SqlParameter> parameters = new List<SqlParameter>();
+                    parameters.Add(new SqlParameter("@ItemCD", hItemCD));
 
-            //実行
-            bat1.ExecuteSingleSQL(query, parameters);
+                    //実行（トランザクション付き）
+                    bat1.ExecuteSingleSQL(query, parameters, conn, tran);
 
-            //登録ボタンと同じ処理
-            btnInsert_Click(null, null);
+                    //トランザクションを渡す
+                    InsertData(conn, tran);
+
+                    //コミット
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    //ロールバック
+                    tran.Rollback();
+                    MessageBox.Show("履歴更新中にエラーが発生しました：" + ex.Message);
+                }
+            }
 
             this.Close();
+        }
+
+        //更新処理用
+        private void InsertData(SqlConnection conn, SqlTransaction tran)
+        {
+            if (dataGridView1.Rows.Count == 0) return;
+
+            //SQL作成
+            string query = CreateSQL_INSERT();
+            
+            //パラメータ追加
+            List<List<SqlParameter>> allParam = AddParameters();
+            if (allParam == null) return;
+
+            //実行
+            bat1.ExecuteMultipleSQL(query, allParam, conn, tran); // tran付きに変更
+
+            dataGridView1.Rows.Clear();
         }
 
         //一行削除ボタン
