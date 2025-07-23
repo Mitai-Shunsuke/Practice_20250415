@@ -20,12 +20,14 @@ namespace StockControlSystem
         private DateTime selectionDate;
         #endregion
 
+        #region ■日付取得・表示
         public frmDateTimePicker(DateTime selectedDate)
         {
             InitializeComponent();
             dateTimePicker1.Value = selectedDate;
             selectionDate = selectedDate;
         }
+        #endregion
 
         #region■ボタン
         //決定ボタン
